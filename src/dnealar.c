@@ -10,6 +10,10 @@
 #include <dnealar/dnealar.h>
 #include "internal.h"
 
+struct DlrContext {
+    int todo;
+};
+
 void dlrSetMallocFunction(DlrMalloc malloc) {
     *((DlrMalloc*) &internalMalloc) = malloc;
 }
