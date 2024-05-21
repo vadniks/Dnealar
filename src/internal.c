@@ -7,17 +7,14 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-#include <dnealar/dnealar.h>
 #include "internal.h"
+#include <stdlib.h>
 
-void dlrSetMallocFunction(DlrMalloc malloc) {
-    *((DlrMalloc*) &internalMalloc) = malloc;
-}
+const DlrMalloc internalMalloc = NULL; //malloc;
+const DlrRealloc internalRealloc = NULL; //realloc;
+const DlrFree internalFree = NULL; //free;
 
-void dlrSetReallocFunction(DlrRealloc realloc) {
-    *((DlrRealloc*) &internalRealloc) = realloc;
-}
-
-void dlrSetFreeFunction(DlrFree free) {
-    *((DlrFree*) &internalFree) = free;
+void internalAssert(bool condition) {
+    if (!condition)
+        abort();
 }

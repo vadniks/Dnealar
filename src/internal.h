@@ -8,16 +8,10 @@
 */
 
 #include <dnealar/dnealar.h>
-#include "internal.h"
+#include <stdbool.h>
 
-void dlrSetMallocFunction(DlrMalloc malloc) {
-    *((DlrMalloc*) &internalMalloc) = malloc;
-}
+extern const DlrMalloc internalMalloc;
+extern const DlrRealloc internalRealloc;
+extern const DlrFree internalFree;
 
-void dlrSetReallocFunction(DlrRealloc realloc) {
-    *((DlrRealloc*) &internalRealloc) = realloc;
-}
-
-void dlrSetFreeFunction(DlrFree free) {
-    *((DlrFree*) &internalFree) = free;
-}
+void internalAssert(bool condition);

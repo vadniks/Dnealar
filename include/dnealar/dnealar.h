@@ -28,11 +28,15 @@ _Static_assert(sizeof(char) == 1 & sizeof(short) == 2 & sizeof(int) == 4 & sizeo
 struct DLR_EXPORT DlrContext;
 typedef struct DlrContext DlrContext;
 
-DLR_EXPORT
-void dlrSetMallocFunction(void* DLR_NULLABLE (* DLR_NONNULL malloc)(unsigned long size));
+typedef void* DLR_NULLABLE (* DLR_NONNULL DlrMalloc)(unsigned long size);
+typedef void* DLR_NULLABLE (* DLR_NONNULL DlrRealloc)(void* DLR_NULLABLE memory, unsigned long size);
+typedef void (* DLR_NONNULL DlrFree)(void* DLR_NULLABLE memory);
 
 DLR_EXPORT
-void dlrSetReallocFunction(void* DLR_NULLABLE (* DLR_NONNULL realloc)(void* DLR_NULLABLE memory, unsigned long size));
+void dlrSetMallocFunction(DlrMalloc malloc);
 
 DLR_EXPORT
-void dlrSetFreeFunction(void (* DLR_NONNULL free)(void* DLR_NULLABLE memory));
+void dlrSetReallocFunction(DlrRealloc realloc);
+
+DLR_EXPORT
+void dlrSetFreeFunction(DlrFree free);
