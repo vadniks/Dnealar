@@ -41,10 +41,6 @@ static void loop(SDL_Window* window) {
 }
 
 int main(void) {
-    dlrSetMallocFunction(SDL_malloc);
-    dlrSetReallocFunction(SDL_realloc);
-    dlrSetFreeFunction(SDL_free);
-
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
     TTF_Init();
@@ -76,7 +72,7 @@ int main(void) {
 
     SDL_GL_SetSwapInterval(1);
 
-    dlrInit();
+    dlrInit(SDL_malloc, SDL_realloc, SDL_free);
     loop(window);
     dlrQuit();
 

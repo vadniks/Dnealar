@@ -10,8 +10,14 @@
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
 
-extern const DlrMalloc internalMalloc;
-extern const DlrRealloc internalRealloc;
-extern const DlrFree internalFree;
+extern DlrMalloc internalMallocFunc;
+extern DlrRealloc internalReallocFunc;
+extern DlrFree internalFreeFunc;
+
+void* DLR_NULLABLE internalMalloc(unsigned long size);
+void* DLR_NULLABLE internalRealloc(void* DLR_NULLABLE memory, unsigned long size);
+void internalFree(void* DLR_NULLABLE memory);
+
+extern DlrContext* internalContext;
 
 void internalAssert(bool condition);

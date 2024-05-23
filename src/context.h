@@ -12,5 +12,5 @@
 #include <dnealar/dnealar.h>
 
 struct DlrContext {
-    int todo;
+    int width, height;
 };

@@ -8,22 +8,11 @@
 */
 
 #include "internal.h"
+#include "context.h"
 #include <dnealar/dnealar.h>
 #include <GL/glew.h>
 
-void dlrSetMallocFunction(DlrMalloc malloc) {
-    *((DlrMalloc*) &internalMalloc) = malloc;
-}
-
-void dlrSetReallocFunction(DlrRealloc realloc) {
-    *((DlrRealloc*) &internalRealloc) = realloc;
-}
-
-void dlrSetFreeFunction(DlrFree free) {
-    *((DlrFree*) &internalFree) = free;
-}
-
-void dlrInit(void) {
+void dlrInit(DlrMalloc malloc, DlrRealloc realloc, DlrFree free) {
     glewExperimental = GL_TRUE;
     internalAssert(glewInit() == GLEW_OK);
 
@@ -31,14 +20,21 @@ void dlrInit(void) {
     glEnable(GL_BLEND);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    internalMallocFunc = malloc;
+    internalReallocFunc = realloc;
+    internalFreeFunc = free;
+
+    internalContext = internalMalloc(sizeof(DlrContext));
 }
 
 void dlrQuit(void) {
-
+    internalFree(internalContext);
 }
 
 void dlrSetViewport(int width, int height) {
     glViewport(0, 0, width, height);
+
 }
 
 void dlrUpdateFrame(int r, int g, int b, int a) {

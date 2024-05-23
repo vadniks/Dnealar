@@ -10,9 +10,23 @@
 #include "internal.h"
 #include <stdlib.h>
 
-const DlrMalloc internalMalloc = NULL; //malloc;
-const DlrRealloc internalRealloc = NULL; //realloc;
-const DlrFree internalFree = NULL; //free;
+DlrMalloc internalMallocFunc = NULL;
+DlrRealloc internalReallocFunc = NULL;
+DlrFree internalFreeFunc = NULL;
+
+void* DLR_NULLABLE internalMalloc(unsigned long size) {
+    return internalMallocFunc(size);
+}
+
+void* DLR_NULLABLE internalRealloc(void* DLR_NULLABLE memory, unsigned long size) {
+    return internalReallocFunc(memory, size);
+}
+
+void internalFree(void* DLR_NULLABLE memory) {
+    internalFreeFunc(memory);
+}
+
+DlrContext* internalContext = NULL;
 
 void internalAssert(bool condition) {
     if (!condition)

@@ -34,11 +34,7 @@ typedef void* DLR_NULLABLE (* DLR_NONNULL DlrMalloc)(unsigned long size);
 typedef void* DLR_NULLABLE (* DLR_NONNULL DlrRealloc)(void* DLR_NULLABLE memory, unsigned long size);
 typedef void (* DLR_NONNULL DlrFree)(void* DLR_NULLABLE memory);
 
-DLR_EXPORT void dlrSetMallocFunction(DlrMalloc malloc);
-DLR_EXPORT void dlrSetReallocFunction(DlrRealloc realloc);
-DLR_EXPORT void dlrSetFreeFunction(DlrFree free);
-
-DLR_EXPORT void dlrInit(void);
+DLR_EXPORT void dlrInit(DlrMalloc malloc, DlrRealloc realloc, DlrFree free);
 DLR_EXPORT void dlrQuit(void);
 DLR_EXPORT void dlrSetViewport(int width, int height);
 DLR_EXPORT void dlrUpdateFrame(int r, int g, int b, int a);
