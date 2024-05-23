@@ -34,6 +34,8 @@ static void render(void) {
     SDL_FreeSurface(xSurface);
     dlrTexture(texture, 500, 0, dlrTextureWidth(texture), dlrTextureHeight(texture), 0.0f, 255, 255, 255, 255);
     dlrTextureDestroy(texture);
+
+    SDL_Delay(1000 / 60);
 }
 
 static void loop(SDL_Window* window) {
