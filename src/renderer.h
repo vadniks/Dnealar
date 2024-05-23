@@ -16,7 +16,7 @@
 void rendererInit(void);
 void rendererQuit(void);
 void rendererDrawPoint(const vec2 DLR_NONNULL position, float pointSize, const vec4 DLR_NONNULL color);
-void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd, const vec4 DLR_NONNULL color);
-void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, const vec4 DLR_NONNULL color, bool filled);
-void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, const vec4 DLR_NONNULL color, bool filled);
+void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd, float pointSize, const vec4 DLR_NONNULL color);
+void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, float pointSize, const vec4 DLR_NONNULL color, bool filled);
+void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled);
 void rendererDrawTexture(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, const dlrByte* DLR_NONNULL data);

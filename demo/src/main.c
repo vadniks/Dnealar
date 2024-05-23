@@ -18,6 +18,7 @@
 
 static void render(void) {
     dlrPoint(100, 100, 5, 255, 255, 255, 255);
+    dlrLine(10, 10, 90, 90, 1, 255, 255, 255, 255);
 }
 
 static void loop(SDL_Window* window) {

@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 DLR_EXPORT void dlrPoint(int x, int y, int size, int r, int g, int b, int a);
-DLR_EXPORT void dlrLine(int x0, int y0, int x1, int y1, int r, int g, int b, int a);
+DLR_EXPORT void dlrLine(int x0, int y0, int x1, int y1, int size, int r, int g, int b, int a);
 DLR_EXPORT void dlrRectangle(int x, int y, int w, int h, int r, int g, int b, int a, bool fill);
 DLR_EXPORT void dlrCircle(int x, int y, int radius, int r, int g, int b, int a, bool fill);
 DLR_EXPORT void dlrTexture(int x, int y, int w, int h, const dlrByte* DLR_NONNULL data);
