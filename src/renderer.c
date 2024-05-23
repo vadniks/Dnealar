@@ -77,7 +77,7 @@ void rendererDrawPoint(const vec2 DLR_NONNULL position, float pointSize, const v
     glBindVertexArray(0);
 }
 
-void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd, float pointSize, const vec4 DLR_NONNULL color) {
+void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd, float lineWidth, const vec4 DLR_NONNULL color) {
     glBindVertexArray(gRenderer->vao);
 
     const float vertices[] = {
@@ -95,14 +95,14 @@ void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNU
     compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
     compoundShaderSetVec4(gRenderer->shader, "color", color);
 
-    glPointSize((float) pointSize);
+    glLineWidth((float) lineWidth);
     glDrawArrays(GL_LINES, 0, 2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 
-void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, float pointSize, const vec4 DLR_NONNULL color, bool filled) {
+void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, float lineWidth, const vec4 DLR_NONNULL color, bool filled) {
     glBindVertexArray(gRenderer->vao);
 
     const float vertices[] = {
@@ -140,7 +140,9 @@ void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNU
     compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
     compoundShaderSetVec4(gRenderer->shader, "color", color);
 
-    glPointSize(filled ? 1.0f : (float) pointSize);
+    if (!filled)
+        glLineWidth((float) lineWidth);
+
     glDrawElements(filled ? GL_TRIANGLES : GL_LINES, filled ? 6 : 8, GL_UNSIGNED_INT, (void*) 0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
