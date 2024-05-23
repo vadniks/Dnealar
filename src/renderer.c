@@ -208,14 +208,22 @@ static void drawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float 
     }
 }
 
-void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) {
-    if (!filled) {
-        drawCircle(positionCenter, radius, pointSize, color);
-        return;
-    }
+static void drawFilledCircle(const vec2 DLR_NONNULL position, int radius, float pointSize, const vec4 DLR_NONNULL color) {
+    for (int w = 0; w < radius * 2; w++) {
+        for (int h = 0; h < radius * 2; h++) {
+            const int dx = radius - w, dy = radius - h;
 
-    for (int i = radius; i >= 0; i--)
-        drawCircle(positionCenter, i, 1, color);
+            if ((dx * dx + dy * dy) <= (radius * radius))
+                rendererDrawPoint((vec2) {position[0] + (float) dx, position[1] + (float) dy}, pointSize, color);
+        }
+    }
+}
+
+void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) {
+    if (!filled)
+        drawCircle(positionCenter, radius, pointSize, color);
+    else
+        drawFilledCircle(positionCenter, radius, pointSize, color);
 }
 
 void rendererDrawTexture(const DlrTexture* DLR_NONNULL texture, const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL size, float rotation, const vec4 DLR_NONNULL color) {
