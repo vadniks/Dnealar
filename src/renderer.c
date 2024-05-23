@@ -12,7 +12,7 @@
 #include "compoundShader.h"
 #include <GL/glew.h>
 
-static const char* const vertexShader =
+static const char* const gVertexShader =
     "#version 330 core"
     "layout (location = 0) in vec2 pos;"
     "uniform mat4 projection;"
@@ -20,7 +20,7 @@ static const char* const vertexShader =
     "   gl_Position = projection * model * vec4(pos, 0.0, 1.0);"
     "}";
 
-static const char* const fragmentShader =
+static const char* const gFragmentShader =
     "#version 330 core"
     "out vec4 colorOut;"
     "uniform vec4 color;"
@@ -35,7 +35,7 @@ struct Renderer {
 
 Renderer* DLR_NONNULL rendererCreate(void) {
     Renderer* renderer = internalMalloc(sizeof *renderer);
-    renderer->shader = compoundShaderCreate(vertexShader, fragmentShader);
+    renderer->shader = compoundShaderCreate(gVertexShader, gFragmentShader);
     glGenBuffers(1, &(renderer->vbo));
     glGenBuffers(1, &(renderer->ebo));
     glGenVertexArrays(1, &((renderer->vao)));
