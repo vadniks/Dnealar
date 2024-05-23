@@ -15,7 +15,7 @@
 struct CompoundShader;
 typedef struct CompoundShader CompoundShader;
 
-CompoundShader* compoundShaderCreate(const char* vertexPath, const char* fragmentPath);
+CompoundShader* compoundShaderCreate(const char* vertexCode, const char* fragmentCode);
 void compoundShaderDestroy(CompoundShader* shader);
 void compoundShaderUse(const CompoundShader* shader);
 void compoundShaderSetBool(const CompoundShader* shader, const char* name, bool value);

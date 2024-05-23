@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include "compoundShader.h"
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
 #include <cglm/types.h>
@@ -17,7 +16,7 @@
 struct Renderer;
 typedef struct Renderer Renderer;
 
-Renderer* DLR_NONNULL rendererCreate(const CompoundShader* DLR_NONNULL shader);
+Renderer* DLR_NONNULL rendererCreate(void);
 void rendererDestroy(Renderer* DLR_NONNULL renderer);
 void rendererDrawPoint(Renderer* DLR_NONNULL renderer, vec2 DLR_NONNULL position);
 void rendererDrawLine(Renderer* DLR_NONNULL renderer, vec2 DLR_NONNULL positionStart, vec2 DLR_NONNULL positionEnd);
