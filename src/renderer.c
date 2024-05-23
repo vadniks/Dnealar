@@ -12,16 +12,18 @@
 #include "context.h"
 #include "compoundShader.h"
 #include <GL/glew.h>
+#include <cglm/affine.h>
 
 struct Renderer {
-    CompoundShader* shader;
+    CompoundShader* shapeShader;
+    CompoundShader* spriteShader;
     unsigned vbo, ebo, vao;
 };
 typedef struct Renderer Renderer;
 
 static Renderer* DLR_NULLABLE gRenderer = NULL;
 
-static const char* const gVertexShader =
+static const char* const gShapeVertexShader =
     "#version 330 core\n"
     "layout (location = 0) in vec2 pos;\n"
     "uniform mat4 projection;\n"
@@ -29,7 +31,7 @@ static const char* const gVertexShader =
     "   gl_Position = projection * vec4(pos, 0.0, 1.0);\n"
     "}\n";
 
-static const char* const gFragmentShader =
+static const char* const gShapeFragmentShader =
     "#version 330 core\n"
     "out vec4 colorOut;\n"
     "uniform vec4 color;\n"
@@ -37,16 +39,39 @@ static const char* const gFragmentShader =
     "   colorOut = color;\n"
     "}\n";
 
+static const char* const gSpriteVertexShader =
+    "#version 330 core\n"
+    "layout (location = 0) in vec4 vertex;\n"
+    "out vec2 textureCoords;\n"
+    "uniform mat4 model;\n"
+    "uniform mat4 projection;\n"
+    "void main() {\n"
+    "   textureCoords = vertex.zw;\n"
+    "   gl_Position = projection * model * vec4(vertex.xy, 0.0, 1.0);\n"
+    "}";
+
+static const char* const gSpriteFragmentShader =
+    "#version 330 core\n"
+    "in vec2 textureCoords;\n"
+    "out vec4 color;\n"
+    "uniform sampler2D sprite;\n"
+    "uniform vec4 spriteColor;\n"
+    "void main() {\n"
+    "   color = spriteColor * texture(sprite, textureCoords);\n"
+    "}";
+
 void rendererInit(void) {
     gRenderer = internalMalloc(sizeof *gRenderer);
-    gRenderer->shader = compoundShaderCreate(gVertexShader, gFragmentShader);
+    gRenderer->shapeShader = compoundShaderCreate(gShapeVertexShader, gShapeFragmentShader);
+    gRenderer->spriteShader = compoundShaderCreate(gSpriteVertexShader, gSpriteFragmentShader);
     glGenBuffers(1, &(gRenderer->vbo));
     glGenBuffers(1, &(gRenderer->ebo));
     glGenVertexArrays(1, &((gRenderer->vao)));
 }
 
 void rendererQuit(void) {
-    compoundShaderDestroy(gRenderer->shader);
+    compoundShaderDestroy(gRenderer->shapeShader);
+    compoundShaderDestroy(gRenderer->spriteShader);
     glDeleteBuffers(1, &(gRenderer->vbo));
     glDeleteBuffers(1, &(gRenderer->ebo));
     glDeleteVertexArrays(1, &((gRenderer->vao)));
@@ -66,9 +91,9 @@ void rendererDrawPoint(const vec2 DLR_NONNULL position, float pointSize, const v
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
 
-    compoundShaderUse(gRenderer->shader);
-    compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
-    compoundShaderSetVec4(gRenderer->shader, "color", color);
+    compoundShaderUse(gRenderer->shapeShader);
+    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalContext->projection);
+    compoundShaderSetVec4(gRenderer->shapeShader, "color", color);
 
     glPointSize((float) pointSize);
     glDrawArrays(GL_POINTS, 0, 1);
@@ -91,9 +116,9 @@ void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNU
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
 
-    compoundShaderUse(gRenderer->shader);
-    compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
-    compoundShaderSetVec4(gRenderer->shader, "color", color);
+    compoundShaderUse(gRenderer->shapeShader);
+    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalContext->projection);
+    compoundShaderSetVec4(gRenderer->shapeShader, "color", color);
 
     glLineWidth((float) lineWidth);
     glDrawArrays(GL_LINES, 0, 2);
@@ -136,9 +161,9 @@ void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNU
         GL_DYNAMIC_DRAW
     );
 
-    compoundShaderUse(gRenderer->shader);
-    compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
-    compoundShaderSetVec4(gRenderer->shader, "color", color);
+    compoundShaderUse(gRenderer->shapeShader);
+    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalContext->projection);
+    compoundShaderSetVec4(gRenderer->shapeShader, "color", color);
 
     if (!filled)
         glLineWidth((float) lineWidth);
@@ -193,6 +218,40 @@ void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float
         drawCircle(positionCenter, i, 1, color);
 }
 
-void rendererDrawTexture(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, const dlrByte* DLR_NONNULL data) { // TODO: add a Texture module & struct
+void rendererDrawTexture(const Texture* DLR_NONNULL texture, const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL size, float rotation, const vec4 DLR_NONNULL color) {
+    glBindVertexArray(gRenderer->vao);
 
+    float vertices[] = {
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 0.0f,
+
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        1.0f, 0.0f, 1.0f, 0.0f
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, gRenderer->vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) 0);
+    glEnableVertexAttribArray(0);
+
+    mat4 model;
+    glm_mat4_identity(model);
+    glm_translate(model, (vec3) {position[0], position[1], 0.0f});
+
+    glm_translate(model, (vec3) {0.5f * size[0], 0.5f * size[1], 0.0f});
+    glm_rotate(model, glm_rad(rotation), (vec3) {0.0f, 0.0f, 1.0f});
+    glm_translate(model, (vec3) {-0.5f * size[0], -0.5f * size[1], 0.0f});
+
+    glm_scale(model, (vec3) {size[0], size[1], 1.0f});
+
+    compoundShaderUse(gRenderer->spriteShader);
+    compoundShaderSetMat4(gRenderer->spriteShader, "projection", internalContext->projection);
+    compoundShaderSetMat4(gRenderer->spriteShader, "model", model);
+    compoundShaderSetVec4(gRenderer->spriteShader, "spriteColor", color);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
