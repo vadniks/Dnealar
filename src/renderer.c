@@ -252,6 +252,12 @@ void rendererDrawTexture(const Texture* DLR_NONNULL texture, const vec2 DLR_NONN
     compoundShaderSetMat4(gRenderer->spriteShader, "model", model);
     compoundShaderSetVec4(gRenderer->spriteShader, "spriteColor", color);
 
+    glActiveTexture(GL_TEXTURE0);
+    textureBind(texture);
+
+    glBindVertexArray(gRenderer->vao);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
