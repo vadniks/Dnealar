@@ -52,22 +52,40 @@ void rendererQuit(void) {
     internalFree(gRenderer);
 }
 
-void rendererDrawPoint(vec2 DLR_NONNULL position) {
+void rendererDrawPoint(const vec2 DLR_NONNULL position, const vec4 DLR_NONNULL color) {
+    glBindVertexArray(gRenderer->vao);
+
+    const float vertices[] = {
+        position[0], position[1]
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, gRenderer->vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), NULL);
+    glEnableVertexAttribArray(0);
+
+    compoundShaderUse(gRenderer->shader);
+    compoundShaderSetVec4(gRenderer->shader, "color", color);
+
+    glDrawArrays(GL_POINT, 0, 1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd) {
 
 }
 
-void rendererDrawLine(vec2 DLR_NONNULL positionStart, vec2 DLR_NONNULL positionEnd) {
+void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, bool filled) {
 
 }
 
-void rendererDrawRectangle(vec2 DLR_NONNULL position, vec2 DLR_NONNULL dimension, bool filled) {
+void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, bool filled) {
 
 }
 
-void rendererDrawCircle(vec2 DLR_NONNULL positionCenter, int radius, bool filled) {
-
-}
-
-void rendererDrawTexture(vec2 DLR_NONNULL position, vec2 DLR_NONNULL dimension, const dlrByte* DLR_NONNULL data) {
+void rendererDrawTexture(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, const dlrByte* DLR_NONNULL data) {
 
 }
