@@ -10,7 +10,9 @@
 #pragma once
 
 #include <dnealar/dnealar.h>
+#include <cglm/types.h>
 
 struct DlrContext {
     int width, height;
+    mat4 projection;
 };

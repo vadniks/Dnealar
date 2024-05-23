@@ -9,6 +9,7 @@
 
 #include "renderer.h"
 #include "internal.h"
+#include "context.h"
 #include "compoundShader.h"
 #include <GL/glew.h>
 
@@ -62,27 +63,28 @@ void rendererDrawPoint(const vec2 DLR_NONNULL position, const vec4 DLR_NONNULL c
     glBindBuffer(GL_ARRAY_BUFFER, gRenderer->vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), NULL);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
 
     compoundShaderUse(gRenderer->shader);
+    compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
     compoundShaderSetVec4(gRenderer->shader, "color", color);
 
-    glDrawArrays(GL_POINT, 0, 1);
+    glDrawArrays(GL_POINTS, 0, 1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 
-void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd) {
+void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd, const vec4 DLR_NONNULL color) {
 
 }
 
-void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, bool filled) {
+void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, const vec4 DLR_NONNULL color, bool filled) {
 
 }
 
-void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, bool filled) {
+void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, const vec4 DLR_NONNULL color, bool filled) {
 
 }
 

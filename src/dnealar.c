@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include <dnealar/dnealar.h>
 #include <GL/glew.h>
+#include <cglm/cam.h>
 
 void dlrInit(DlrMalloc malloc, DlrRealloc realloc, DlrFree free) {
     glewExperimental = GL_TRUE;
@@ -37,7 +38,7 @@ void dlrQuit(void) {
 
 void dlrSetViewport(int width, int height) {
     glViewport(0, 0, width, height);
-
+    glm_ortho(0.0f, (float) width, (float) height, 0.0f, -1.0f, 1.0f, internalContext->projection);
 }
 
 void dlrUpdateFrame(int r, int g, int b, int a) {
