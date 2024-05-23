@@ -19,6 +19,6 @@ void* DLR_NULLABLE internalMalloc(unsigned long size);
 void* DLR_NULLABLE internalRealloc(void* DLR_NULLABLE memory, unsigned long size);
 void internalFree(void* DLR_NULLABLE memory);
 
-extern DlrContext* internalContext;
+extern DlrContext* DLR_NONNULL internalContext;
 
 void internalAssert(bool condition);

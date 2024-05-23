@@ -26,7 +26,7 @@ void internalFree(void* DLR_NULLABLE memory) {
     internalFreeFunc(memory);
 }
 
-DlrContext* internalContext = NULL;
+DlrContext* DLR_NONNULL internalContext = NULL;
 
 void internalAssert(bool condition) {
     if (!condition)
