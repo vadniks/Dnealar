@@ -15,6 +15,10 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+static void render(void) {
+
+}
+
 static void loop(SDL_Window* window) {
     int width, height;
     SDL_Event event;
@@ -29,6 +33,10 @@ static void loop(SDL_Window* window) {
                     return;
             }
         }
+
+        dlrUpdateFrame();
+        render();
+        SDL_GL_SwapWindow(window);
     }
 }
 

@@ -40,3 +40,8 @@ void dlrQuit(void) {
 void dlrSetViewport(int width, int height) {
     glViewport(0, 0, width, height);
 }
+
+void dlrUpdateFrame(void) {
+    glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
