@@ -22,8 +22,8 @@ static void render(void) {
     dlrPoint(100, 100, 5, 255, 255, 255, 255);
     dlrLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
     dlrRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
-    dlrRectangle(220, 170, 100, 50, 1, 255, 255, 255, 255, false);
-    dlrCircle(300, 300, 50, 1, 255, 255, 255, 255, false);
+    dlrRectangle(220, 170, 100, 50, 5, 255, 255, 255, 255, false);
+    dlrCircle(300, 300, 50, 5, 255, 255, 255, 255, false);
     dlrCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
 
     SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, "Hello World!", (SDL_Color) {255, 255, 255, 255});
