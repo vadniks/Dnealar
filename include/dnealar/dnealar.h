@@ -38,6 +38,12 @@ typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextureData)(void* DLR_NONNULL textu
 
 typedef void (* DLR_NONNULL DlrTextMetrics)(const char* DLR_NONNULL text, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
+extern int dlrForegroundColor;
+extern int dlrBackgroundColor;
+extern int dlrHoverColor;
+extern int dlrActiveColor;
+extern int dlrPassiveColor;
+
 DLR_EXPORT void dlrInit(
     DlrMalloc malloc,
     DlrRealloc realloc,

@@ -14,6 +14,12 @@
 #include <GL/glew.h>
 #include <cglm/cam.h>
 
+int dlrForegroundColor = 0x25252525;
+int dlrBackgroundColor = (int) 0xffffffff;
+int dlrHoverColor = 0x70707070;
+int dlrActiveColor = 0x00ffff7f;
+int dlrPassiveColor = 0x60606060;
+
 void dlrInit(
     DlrMalloc malloc,
     DlrRealloc realloc,
