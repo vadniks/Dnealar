@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <dnealar/dnealar.h>
+#include "dnealar.h"
 
 struct Texture;
 typedef struct Texture Texture;

@@ -10,10 +10,11 @@
 #pragma once
 
 #include <dnealar/dnealar.h>
+#include <dnealar/texture.h>
 #include <stdbool.h>
 
-DLR_EXPORT void dlrPoint(int x, int y, int size, int r, int g, int b, int a);
-DLR_EXPORT void dlrLine(int x0, int y0, int x1, int y1, int size, int r, int g, int b, int a);
-DLR_EXPORT void dlrRectangle(int x, int y, int w, int h, int size, int r, int g, int b, int a, bool fill);
-DLR_EXPORT void dlrCircle(int x, int y, int radius, int size, int r, int g, int b, int a, bool fill);
-DLR_EXPORT void dlrTexture(int x, int y, int w, int h, const dlrByte* DLR_NONNULL data);
+DLR_EXPORT void dlrPoint(int x, int y, int pointSize, int r, int g, int b, int a);
+DLR_EXPORT void dlrLine(int x0, int y0, int x1, int y1, int lineWidth, int r, int g, int b, int a);
+DLR_EXPORT void dlrRectangle(int x, int y, int w, int h, int lineWidth, int r, int g, int b, int a, bool fill);
+DLR_EXPORT void dlrCircle(int x, int y, int radius, int pointSize, int r, int g, int b, int a, bool fill);
+DLR_EXPORT void dlrTexture(const Texture* DLR_NONNULL texture, int x, int y, int w, int h, float rotation, int r, int g, int b, int a);

@@ -7,7 +7,7 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-#include "texture.h"
+#include "dnealar/texture.h"
 #include "internal.h"
 #include <GL/glew.h>
 

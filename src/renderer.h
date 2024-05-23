@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "texture.h"
+#include "dnealar/texture.h"
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
 #include <cglm/types.h>

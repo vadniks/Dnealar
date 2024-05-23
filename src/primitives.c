@@ -10,22 +10,22 @@
 #include <dnealar/primitives.h>
 #include "renderer.h"
 
-void dlrPoint(int x, int y, int size, int r, int g, int b, int a) {
-    rendererDrawPoint((vec2) {(float) x, (float) y}, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a});
+void dlrPoint(int x, int y, int pointSize, int r, int g, int b, int a) {
+    rendererDrawPoint((vec2) {(float) x, (float) y}, (float) pointSize, (vec4) {(float) r, (float) g, (float) b, (float) a});
 }
 
-void dlrLine(int x0, int y0, int x1, int y1, int size, int r, int g, int b, int a) {
-    rendererDrawLine((vec2) {(float) x0, (float) y0}, (vec2) {(float) x1, (float) y1}, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a});
+void dlrLine(int x0, int y0, int x1, int y1, int lineWidth, int r, int g, int b, int a) {
+    rendererDrawLine((vec2) {(float) x0, (float) y0}, (vec2) {(float) x1, (float) y1}, (float) lineWidth, (vec4) {(float) r, (float) g, (float) b, (float) a});
 }
 
-void dlrRectangle(int x, int y, int w, int h, int size, int r, int g, int b, int a, bool fill) {
-    rendererDrawRectangle((vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
+void dlrRectangle(int x, int y, int w, int h, int lineWidth, int r, int g, int b, int a, bool fill) {
+    rendererDrawRectangle((vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, (float) lineWidth, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
 }
 
-void dlrCircle(int x, int y, int radius, int size, int r, int g, int b, int a, bool fill) {
-    rendererDrawCircle((vec2) {(float) x, (float) y}, radius, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
+void dlrCircle(int x, int y, int radius, int pointSize, int r, int g, int b, int a, bool fill) {
+    rendererDrawCircle((vec2) {(float) x, (float) y}, radius, (float) pointSize, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
 }
 
-void dlrTexture(int x, int y, int w, int h, const dlrByte* DLR_NONNULL data) {
-
+void dlrTexture(const Texture* DLR_NONNULL texture, int x, int y, int w, int h, float rotation, int r, int g, int b, int a) {
+    rendererDrawTexture(texture, (vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, rotation, (vec4) {(float) r, (float) g, (float) b, (float) a});
 }
