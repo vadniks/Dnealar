@@ -218,7 +218,7 @@ void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float
         drawCircle(positionCenter, i, 1, color);
 }
 
-void rendererDrawTexture(const Texture* DLR_NONNULL texture, const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL size, float rotation, const vec4 DLR_NONNULL color) {
+void rendererDrawTexture(const DlrTexture* DLR_NONNULL texture, const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL size, float rotation, const vec4 DLR_NONNULL color) {
     glBindVertexArray(gRenderer->vao);
 
     float vertices[] = {
@@ -253,7 +253,7 @@ void rendererDrawTexture(const Texture* DLR_NONNULL texture, const vec2 DLR_NONN
     compoundShaderSetVec4(gRenderer->spriteShader, "spriteColor", color);
 
     glActiveTexture(GL_TEXTURE0);
-    textureBind(texture);
+    dlrTextureBind(texture);
 
     glBindVertexArray(gRenderer->vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);

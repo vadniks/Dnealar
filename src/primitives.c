@@ -11,21 +11,21 @@
 #include "renderer.h"
 
 void dlrPoint(int x, int y, int pointSize, int r, int g, int b, int a) {
-    rendererDrawPoint((vec2) {(float) x, (float) y}, (float) pointSize, (vec4) {(float) r, (float) g, (float) b, (float) a});
+    rendererDrawPoint((vec2) {(float) x, (float) y}, (float) pointSize, (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f});
 }
 
 void dlrLine(int x0, int y0, int x1, int y1, int lineWidth, int r, int g, int b, int a) {
-    rendererDrawLine((vec2) {(float) x0, (float) y0}, (vec2) {(float) x1, (float) y1}, (float) lineWidth, (vec4) {(float) r, (float) g, (float) b, (float) a});
+    rendererDrawLine((vec2) {(float) x0, (float) y0}, (vec2) {(float) x1, (float) y1}, (float) lineWidth, (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f});
 }
 
 void dlrRectangle(int x, int y, int w, int h, int lineWidth, int r, int g, int b, int a, bool fill) {
-    rendererDrawRectangle((vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, (float) lineWidth, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
+    rendererDrawRectangle((vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, (float) lineWidth, (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f}, fill);
 }
 
 void dlrCircle(int x, int y, int radius, int pointSize, int r, int g, int b, int a, bool fill) {
-    rendererDrawCircle((vec2) {(float) x, (float) y}, radius, (float) pointSize, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
+    rendererDrawCircle((vec2) {(float) x, (float) y}, radius, (float) pointSize, (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f}, fill);
 }
 
-void dlrTexture(const Texture* DLR_NONNULL texture, int x, int y, int w, int h, float rotation, int r, int g, int b, int a) {
-    rendererDrawTexture(texture, (vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, rotation, (vec4) {(float) r, (float) g, (float) b, (float) a});
+void dlrTexture(const DlrTexture* DLR_NONNULL texture, int x, int y, int w, int h, float rotation, int r, int g, int b, int a) {
+    rendererDrawTexture(texture, (vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, rotation, (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f});
 }

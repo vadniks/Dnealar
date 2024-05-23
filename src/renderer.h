@@ -20,4 +20,4 @@ void rendererDrawPoint(const vec2 DLR_NONNULL position, float pointSize, const v
 void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd, float lineWidth, const vec4 DLR_NONNULL color);
 void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL size, float lineWidth, const vec4 DLR_NONNULL color, bool filled);
 void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled);
-void rendererDrawTexture(const Texture* DLR_NONNULL texture, const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL size, float rotation, const vec4 DLR_NONNULL color);
+void rendererDrawTexture(const DlrTexture* DLR_NONNULL texture, const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL size, float rotation, const vec4 DLR_NONNULL color);

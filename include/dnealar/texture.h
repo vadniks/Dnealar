@@ -9,13 +9,13 @@
 
 #pragma once
 
-#include "dnealar.h"
+#include <dnealar/dnealar.h>
 
-struct Texture;
-typedef struct Texture Texture;
+struct DLR_EXPORT DlrTexture;
+typedef struct DlrTexture DlrTexture;
 
-Texture* DLR_NONNULL textureCreate(int width, int height, const dlrByte* DLR_NONNULL data);
-void textureDestroy(Texture* DLR_NONNULL texture);
-void textureBind(const Texture* DLR_NONNULL texture);
-int textureWidth(const Texture* DLR_NONNULL texture);
-int textureHeight(const Texture* DLR_NONNULL texture);
+DLR_EXPORT DlrTexture* DLR_NONNULL dlrTextureCreate(int width, int height, const dlrByte* DLR_NONNULL data);
+DLR_EXPORT void dlrTextureDestroy(DlrTexture* DLR_NONNULL texture);
+DLR_EXPORT void dlrTextureBind(const DlrTexture* DLR_NONNULL texture);
+DLR_EXPORT int dlrTextureWidth(const DlrTexture* DLR_NONNULL texture);
+DLR_EXPORT int dlrTextureHeight(const DlrTexture* DLR_NONNULL texture);

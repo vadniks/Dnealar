@@ -11,13 +11,13 @@
 #include "internal.h"
 #include <GL/glew.h>
 
-struct Texture {
+struct DlrTexture {
     unsigned id;
     int width, height;
 };
 
-Texture* DLR_NONNULL textureCreate(int width, int height, const dlrByte* DLR_NONNULL data) {
-    Texture* texture = internalMalloc(sizeof *texture);
+DlrTexture* DLR_NONNULL dlrTextureCreate(int width, int height, const dlrByte* DLR_NONNULL data) {
+    DlrTexture* texture = internalMalloc(sizeof *texture);
     texture->id = 0;
     texture->width = width;
     texture->height = height;
@@ -44,19 +44,19 @@ Texture* DLR_NONNULL textureCreate(int width, int height, const dlrByte* DLR_NON
     return texture;
 }
 
-void textureDestroy(Texture* DLR_NONNULL texture) {
+void dlrTextureDestroy(DlrTexture* DLR_NONNULL texture) {
     glDeleteTextures(1, &(texture->id));
     internalFree(texture);
 }
 
-void textureBind(const Texture* DLR_NONNULL texture) {
+void dlrTextureBind(const DlrTexture* DLR_NONNULL texture) {
     glBindTexture(GL_TEXTURE_2D, texture->id);
 }
 
-int textureWidth(const Texture* DLR_NONNULL texture) {
+int dlrTextureWidth(const DlrTexture* DLR_NONNULL texture) {
     return texture->width;
 }
 
-int textureHeight(const Texture* DLR_NONNULL texture) {
+int dlrTextureHeight(const DlrTexture* DLR_NONNULL texture) {
     return texture->height;
 }

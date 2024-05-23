@@ -16,6 +16,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+static TTF_Font* gFont = NULL;
+
 static void render(void) {
     dlrPoint(100, 100, 5, 255, 255, 255, 255);
     dlrLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
@@ -23,6 +25,13 @@ static void render(void) {
     dlrRectangle(220, 170, 100, 50, 1, 255, 255, 255, 255, false);
     dlrCircle(300, 300, 50, 1, 255, 255, 255, 255, false);
     dlrCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
+
+    SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, "Hello World!", (SDL_Color) {255, 255, 255, 255});
+    assert(surface != NULL);
+    DlrTexture* texture = dlrTextureCreate(surface->w, surface->h, surface->pixels);
+    SDL_FreeSurface(surface);
+    dlrTexture(texture, 500, 0, dlrTextureWidth(texture), dlrTextureHeight(texture), 0.0f, 255, 255, 255, 255);
+    dlrTextureDestroy(texture);
 }
 
 static void loop(SDL_Window* window) {
@@ -50,6 +59,7 @@ int main(void) {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
     TTF_Init();
+    gFont = TTF_OpenFont("res/RobotoMono.ttf", 16);
 
     SDL_version version;
     SDL_GetVersion(&version);
@@ -85,6 +95,7 @@ int main(void) {
     SDL_GL_DeleteContext(glContext);
     SDL_DestroyWindow(window);
 
+    TTF_CloseFont(gFont);
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
