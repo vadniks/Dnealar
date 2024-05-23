@@ -7,6 +7,7 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+#include "context.h"
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
 
@@ -21,6 +22,7 @@ extern DlrTextureDestroy internalTextureDestroy;
 extern DlrTextureMetrics internalTextureMetrics;
 extern DlrTextureData internalTextureData;
 
+// assume const:
 extern DlrTextMetrics internalTextMetrics;
 
 extern DlrContext* DLR_NONNULL internalContext;

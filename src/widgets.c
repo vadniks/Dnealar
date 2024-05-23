@@ -7,10 +7,10 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+#include "internal.h"
 #include <dnealar/widgets.h>
 
 bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
-
 
     return false;
 }

@@ -27,9 +27,6 @@ _Static_assert(sizeof(char) == 1 & sizeof(short) == 2 & sizeof(int) == 4 & sizeo
 
 typedef unsigned char dlrByte;
 
-struct DLR_EXPORT DlrContext;
-typedef struct DlrContext DlrContext;
-
 typedef void* DLR_NULLABLE (* DLR_NONNULL DlrMalloc)(unsigned long size);
 typedef void* DLR_NULLABLE (* DLR_NONNULL DlrRealloc)(void* DLR_NULLABLE memory, unsigned long size);
 typedef void (* DLR_NONNULL DlrFree)(void* DLR_NULLABLE memory);

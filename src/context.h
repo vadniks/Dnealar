@@ -16,3 +16,4 @@ struct DlrContext {
     int width, height;
     mat4 projection;
 };
+typedef struct DlrContext DlrContext;
