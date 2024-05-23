@@ -27,9 +27,11 @@ static void render(void) {
     dlrCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
 
     SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, "Hello World!", (SDL_Color) {255, 255, 255, 255});
-    assert(surface != NULL);
-    DlrTexture* texture = dlrTextureCreate(surface->w, surface->h, surface->pixels);
+    SDL_Surface* xSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
     SDL_FreeSurface(surface);
+    assert(xSurface != NULL);
+    DlrTexture* texture = dlrTextureCreate(xSurface->w, xSurface->h, xSurface->pixels);
+    SDL_FreeSurface(xSurface);
     dlrTexture(texture, 500, 0, dlrTextureWidth(texture), dlrTextureHeight(texture), 0.0f, 255, 255, 255, 255);
     dlrTextureDestroy(texture);
 }
