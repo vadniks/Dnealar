@@ -21,7 +21,7 @@ file(GLOB SOURCES CONFIGURE_DEPENDS include/dnealar/*.h src/*.c src/*.h)
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} GL GLEW m ${PROJECT_SOURCE_DIR}/libs/cglm/bin/libcglm.so)
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PRIVATE include ${PROJECT_SOURCE_DIR}/libs/cglm/include)
 
 set(DEMO demo)
 add_subdirectory(${DEMO})

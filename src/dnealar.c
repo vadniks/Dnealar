@@ -7,12 +7,9 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-#include <dnealar/dnealar.h>
 #include "internal.h"
-
-struct DlrContext {
-    int todo;
-};
+#include <dnealar/dnealar.h>
+#include <GL/glew.h>
 
 void dlrSetMallocFunction(DlrMalloc malloc) {
     *((DlrMalloc*) &internalMalloc) = malloc;
@@ -24,4 +21,22 @@ void dlrSetReallocFunction(DlrRealloc realloc) {
 
 void dlrSetFreeFunction(DlrFree free) {
     *((DlrFree*) &internalFree) = free;
+}
+
+void dlrInit(void) {
+    glewExperimental = GL_TRUE;
+    internalAssert(glewInit() == GLEW_OK);
+
+    glEnable(GL_MULTISAMPLE);
+    glEnable(GL_BLEND);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void dlrQuit(void) {
+
+}
+
+void dlrSetViewport(int width, int height) {
+    glViewport(0, 0, width, height);
 }
