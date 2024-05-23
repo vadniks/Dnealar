@@ -150,10 +150,49 @@ void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNU
     glBindVertexArray(0);
 }
 
-void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) {
+static void drawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color) {
+    const int32_t diameter = (radius * 2);
 
+    int32_t x = (radius - 1);
+    int32_t y = 0;
+    int32_t tx = 1;
+    int32_t ty = 1;
+    int32_t error = (tx - diameter);
+
+    while (x >= y) {
+        rendererDrawPoint((vec2) {positionCenter[0] + (float) x, positionCenter[1] - (float) y}, pointSize, color);
+        rendererDrawPoint((vec2) {positionCenter[0] + (float) x, positionCenter[1] + (float) y}, pointSize, color);
+        rendererDrawPoint((vec2) {positionCenter[0] - (float) x, positionCenter[1] - (float) y}, pointSize, color);
+        rendererDrawPoint((vec2) {positionCenter[0] - (float) x, positionCenter[1] + (float) y}, pointSize, color);
+        rendererDrawPoint((vec2) {positionCenter[0] + (float) y, positionCenter[1] - (float) x}, pointSize, color);
+        rendererDrawPoint((vec2) {positionCenter[0] + (float) y, positionCenter[1] + (float) x}, pointSize, color);
+        rendererDrawPoint((vec2) {positionCenter[0] - (float) y, positionCenter[1] - (float) x}, pointSize, color);
+        rendererDrawPoint((vec2) {positionCenter[0] - (float) y, positionCenter[1] + (float) x}, pointSize, color);
+
+        if (error <= 0) {
+            y++;
+            error += ty;
+            ty += 2;
+        }
+
+        if (error > 0) {
+            x--;
+            tx += 2;
+            error += (tx - diameter);
+        }
+    }
 }
 
-void rendererDrawTexture(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, const dlrByte* DLR_NONNULL data) {
+void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) {
+    if (!filled) {
+        drawCircle(positionCenter, radius, pointSize, color);
+        return;
+    }
+
+    for (int i = radius; i >= 0; i--)
+        drawCircle(positionCenter, i, 1, color);
+}
+
+void rendererDrawTexture(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, const dlrByte* DLR_NONNULL data) { // TODO: add a Texture module & struct
 
 }

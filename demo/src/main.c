@@ -21,6 +21,8 @@ static void render(void) {
     dlrLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
     dlrRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
     dlrRectangle(220, 170, 100, 50, 1, 255, 255, 255, 255, false);
+    dlrCircle(300, 300, 50, 1, 255, 255, 255, 255, false);
+    dlrCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
 }
 
 static void loop(SDL_Window* window) {

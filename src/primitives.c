@@ -22,8 +22,8 @@ void dlrRectangle(int x, int y, int w, int h, int size, int r, int g, int b, int
     rendererDrawRectangle((vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
 }
 
-void dlrCircle(int x, int y, int radius, int r, int g, int b, int a, bool fill) {
-
+void dlrCircle(int x, int y, int radius, int size, int r, int g, int b, int a, bool fill) {
+    rendererDrawCircle((vec2) {(float) x, (float) y}, radius, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
 }
 
 void dlrTexture(int x, int y, int w, int h, const dlrByte* DLR_NONNULL data) {
