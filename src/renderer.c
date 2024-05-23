@@ -53,7 +53,7 @@ void rendererQuit(void) {
     internalFree(gRenderer);
 }
 
-void rendererDrawPoint(const vec2 DLR_NONNULL position, const vec4 DLR_NONNULL color) {
+void rendererDrawPoint(const vec2 DLR_NONNULL position, float pointSize, const vec4 DLR_NONNULL color) {
     glBindVertexArray(gRenderer->vao);
 
     const float vertices[] = {
@@ -70,6 +70,7 @@ void rendererDrawPoint(const vec2 DLR_NONNULL position, const vec4 DLR_NONNULL c
     compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
     compoundShaderSetVec4(gRenderer->shader, "color", color);
 
+    glPointSize((float) pointSize);
     glDrawArrays(GL_POINTS, 0, 1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);

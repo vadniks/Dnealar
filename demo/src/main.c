@@ -17,8 +17,7 @@
 #include <SDL2/SDL_ttf.h>
 
 static void render(void) {
-    for (int i = 0; i < 100; i++)
-        dlrPoint(i, i, 255, 255, 255, 255);
+    dlrPoint(100, 100, 5, 255, 255, 255, 255);
 }
 
 static void loop(SDL_Window* window) {

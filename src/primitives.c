@@ -10,8 +10,8 @@
 #include <dnealar/primitives.h>
 #include "renderer.h"
 
-void dlrPoint(int x, int y, int r, int g, int b, int a) {
-    rendererDrawPoint((vec2) {(float) x, (float) y}, (vec4) {(float) r, (float) g, (float) b, (float) a});
+void dlrPoint(int x, int y, int size, int r, int g, int b, int a) {
+    rendererDrawPoint((vec2) {(float) x, (float) y}, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a});
 }
 
 void dlrLine(int x0, int y0, int x1, int y1, int r, int g, int b, int a) {
