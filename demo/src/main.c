@@ -53,7 +53,7 @@ static void loop(SDL_Window* window) {
             }
         }
 
-        dlrUpdateFrame(0, 0, 0, 0);
+        dlrUpdateFrame();
         render();
         SDL_GL_SwapWindow(window);
     }
