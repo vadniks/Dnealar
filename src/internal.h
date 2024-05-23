@@ -7,9 +7,9 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-#include "context.h"
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
+#include <cglm/types.h>
 
 // assume const:
 extern DlrMalloc internalMalloc;
@@ -25,6 +25,6 @@ extern DlrTextureData internalTextureData;
 // assume const:
 extern DlrTextMetrics internalTextMetrics;
 
-extern DlrContext* DLR_NONNULL internalContext;
+extern mat4 internalProjection;
 
 void internalAssert(bool condition);

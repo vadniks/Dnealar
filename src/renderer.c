@@ -9,7 +9,6 @@
 
 #include "renderer.h"
 #include "internal.h"
-#include "context.h"
 #include "compoundShader.h"
 #include <GL/glew.h>
 #include <cglm/affine.h>
@@ -92,7 +91,7 @@ void rendererDrawPoint(const vec2 DLR_NONNULL position, float pointSize, const v
     glEnableVertexAttribArray(0);
 
     compoundShaderUse(gRenderer->shapeShader);
-    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalContext->projection);
+    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalProjection);
     compoundShaderSetVec4(gRenderer->shapeShader, "color", color);
 
     glPointSize((float) pointSize);
@@ -117,7 +116,7 @@ void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNU
     glEnableVertexAttribArray(0);
 
     compoundShaderUse(gRenderer->shapeShader);
-    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalContext->projection);
+    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalProjection);
     compoundShaderSetVec4(gRenderer->shapeShader, "color", color);
 
     glLineWidth((float) lineWidth);
@@ -162,7 +161,7 @@ void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNU
     );
 
     compoundShaderUse(gRenderer->shapeShader);
-    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalContext->projection);
+    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalProjection);
     compoundShaderSetVec4(gRenderer->shapeShader, "color", color);
 
     if (!filled)
@@ -256,7 +255,7 @@ void rendererDrawTexture(const DlrTexture* DLR_NONNULL texture, const vec2 DLR_N
     glm_scale(model, (vec3) {size[0], size[1], 1.0f});
 
     compoundShaderUse(gRenderer->spriteShader);
-    compoundShaderSetMat4(gRenderer->spriteShader, "projection", internalContext->projection);
+    compoundShaderSetMat4(gRenderer->spriteShader, "projection", internalProjection);
     compoundShaderSetMat4(gRenderer->spriteShader, "model", model);
     compoundShaderSetVec4(gRenderer->spriteShader, "spriteColor", color);
 

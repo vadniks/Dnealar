@@ -8,7 +8,6 @@
 */
 
 #include "internal.h"
-#include "context.h"
 #include "renderer.h"
 #include <dnealar/dnealar.h>
 #include <GL/glew.h>
@@ -49,18 +48,16 @@ void dlrInit(
 
     internalTextMetrics = textMetrics;
 
-    internalContext = internalMalloc(sizeof(DlrContext));
     rendererInit();
 }
 
 void dlrQuit(void) {
     rendererQuit();
-    internalFree(internalContext);
 }
 
 void dlrSetViewport(int width, int height) {
     glViewport(0, 0, width, height);
-    glm_ortho(0.0f, (float) width, (float) height, 0.0f, -1.0f, 1.0f, internalContext->projection);
+    glm_ortho(0.0f, (float) width, (float) height, 0.0f, -1.0f, 1.0f, internalProjection);
 }
 
 void dlrUpdateFrame(int r, int g, int b, int a) {

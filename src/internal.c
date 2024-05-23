@@ -19,9 +19,9 @@ DlrTextureDestroy internalTextureDestroy = NULL;
 DlrTextureMetrics internalTextureMetrics = NULL;
 DlrTextureData internalTextureData = NULL;
 
-DlrContext* DLR_NONNULL internalContext = NULL;
-
 DlrTextMetrics internalTextMetrics = NULL;
+
+mat4 internalProjection = {0};
 
 void internalAssert(bool condition) {
     if (!condition)
