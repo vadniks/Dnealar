@@ -10,23 +10,18 @@
 #include "internal.h"
 #include <stdlib.h>
 
-DlrMalloc internalMallocFunc = NULL;
-DlrRealloc internalReallocFunc = NULL;
-DlrFree internalFreeFunc = NULL;
+DlrMalloc internalMalloc = NULL;
+DlrRealloc internalRealloc = NULL;
+DlrFree internalFree = NULL;
 
-void* DLR_NULLABLE internalMalloc(unsigned long size) {
-    return internalMallocFunc(size);
-}
-
-void* DLR_NULLABLE internalRealloc(void* DLR_NULLABLE memory, unsigned long size) {
-    return internalReallocFunc(memory, size);
-}
-
-void internalFree(void* DLR_NULLABLE memory) {
-    internalFreeFunc(memory);
-}
+DlrTextTextureCreate internalTextTextureCreate = NULL;
+DlrTextureDestroy internalTextureDestroy = NULL;
+DlrTextureMetrics internalTextureMetrics = NULL;
+DlrTextureData internalTextureData = NULL;
 
 DlrContext* DLR_NONNULL internalContext = NULL;
+
+DlrTextMetrics internalTextMetrics = NULL;
 
 void internalAssert(bool condition) {
     if (!condition)

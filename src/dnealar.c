@@ -14,7 +14,16 @@
 #include <GL/glew.h>
 #include <cglm/cam.h>
 
-void dlrInit(DlrMalloc malloc, DlrRealloc realloc, DlrFree free) {
+void dlrInit(
+    DlrMalloc malloc,
+    DlrRealloc realloc,
+    DlrFree free,
+    DlrTextTextureCreate textTextureCreate,
+    DlrTextureDestroy textureDestroy,
+    DlrTextureMetrics textureMetrics,
+    DlrTextureData textureData,
+    DlrTextMetrics textMetrics
+) {
     glewExperimental = GL_TRUE;
     internalAssert(glewInit() == GLEW_OK);
 
@@ -23,9 +32,16 @@ void dlrInit(DlrMalloc malloc, DlrRealloc realloc, DlrFree free) {
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    internalMallocFunc = malloc;
-    internalReallocFunc = realloc;
-    internalFreeFunc = free;
+    internalMalloc = malloc;
+    internalRealloc = realloc;
+    internalFree = free;
+
+    internalTextTextureCreate = textTextureCreate;
+    internalTextureDestroy = textureDestroy;
+    internalTextureMetrics = textureMetrics;
+    internalTextureData = textureData;
+
+    internalTextMetrics = textMetrics;
 
     internalContext = internalMalloc(sizeof(DlrContext));
     rendererInit();

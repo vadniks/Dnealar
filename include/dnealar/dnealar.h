@@ -34,7 +34,23 @@ typedef void* DLR_NULLABLE (* DLR_NONNULL DlrMalloc)(unsigned long size);
 typedef void* DLR_NULLABLE (* DLR_NONNULL DlrRealloc)(void* DLR_NULLABLE memory, unsigned long size);
 typedef void (* DLR_NONNULL DlrFree)(void* DLR_NULLABLE memory);
 
-DLR_EXPORT void dlrInit(DlrMalloc malloc, DlrRealloc realloc, DlrFree free);
+typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextTextureCreate)(const char* DLR_NONNULL text, int r, int g, int b, int a);
+typedef void (* DLR_NONNULL DlrTextureDestroy)(void* DLR_NONNULL texture);
+typedef void (* DLR_NONNULL DlrTextureMetrics)(void* DLR_NONNULL texture, int* DLR_NONNULL width, int* DLR_NONNULL height);
+typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextureData)(void* DLR_NONNULL texture);
+
+typedef void (* DLR_NONNULL DlrTextMetrics)(const char* DLR_NONNULL text, int* DLR_NONNULL width, int* DLR_NONNULL height);
+
+DLR_EXPORT void dlrInit(
+    DlrMalloc malloc,
+    DlrRealloc realloc,
+    DlrFree free,
+    DlrTextTextureCreate textTextureCreate,
+    DlrTextureDestroy textureDestroy,
+    DlrTextureMetrics textureMetrics,
+    DlrTextureData textureData,
+    DlrTextMetrics textMetrics
+);
 DLR_EXPORT void dlrQuit(void);
 DLR_EXPORT void dlrSetViewport(int width, int height);
 DLR_EXPORT void dlrUpdateFrame(int r, int g, int b, int a);

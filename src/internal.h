@@ -11,13 +11,17 @@
 #include <stdbool.h>
 
 // assume const:
-extern DlrMalloc internalMallocFunc;
-extern DlrRealloc internalReallocFunc;
-extern DlrFree internalFreeFunc;
+extern DlrMalloc internalMalloc;
+extern DlrRealloc internalRealloc;
+extern DlrFree internalFree;
 
-void* DLR_NULLABLE internalMalloc(unsigned long size);
-void* DLR_NULLABLE internalRealloc(void* DLR_NULLABLE memory, unsigned long size);
-void internalFree(void* DLR_NULLABLE memory);
+// assume const:
+extern DlrTextTextureCreate internalTextTextureCreate;
+extern DlrTextureDestroy internalTextureDestroy;
+extern DlrTextureMetrics internalTextureMetrics;
+extern DlrTextureData internalTextureData;
+
+extern DlrTextMetrics internalTextMetrics;
 
 extern DlrContext* DLR_NONNULL internalContext;
 

@@ -19,12 +19,12 @@
 static TTF_Font* gFont = NULL;
 
 static void render(void) {
-    dlrPoint(100, 100, 5, 255, 255, 255, 255);
-    dlrLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
-    dlrRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
-    dlrRectangle(220, 170, 100, 50, 5, 255, 255, 255, 255, false);
-    dlrCircle(300, 300, 50, 5, 255, 255, 255, 255, false);
-    dlrCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
+    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
+    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
+    dlrPrimitivesRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
+    dlrPrimitivesRectangle(220, 170, 100, 50, 5, 255, 255, 255, 255, false);
+    dlrPrimitivesCircle(300, 300, 50, 5, 255, 255, 255, 255, false);
+    dlrPrimitivesCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
 
     SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, "Hello World!", (SDL_Color) {255, 255, 255, 255});
     SDL_Surface* xSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
@@ -32,7 +32,7 @@ static void render(void) {
     assert(xSurface != NULL);
     DlrTexture* texture = dlrTextureCreate(xSurface->w, xSurface->h, xSurface->pixels);
     SDL_FreeSurface(xSurface);
-    dlrTexture(texture, 500, 0, dlrTextureWidth(texture), dlrTextureHeight(texture), 0.0f, 255, 255, 255, 255);
+    dlrPrimitivesTexture(texture, 500, 0, dlrTextureWidth(texture), dlrTextureHeight(texture), 0.0f, 255, 255, 255, 255);
     dlrTextureDestroy(texture);
 
     SDL_Delay(1000 / 60);
@@ -57,6 +57,34 @@ static void loop(SDL_Window* window) {
         render();
         SDL_GL_SwapWindow(window);
     }
+}
+
+static void* DLR_NONNULL textTextureCreate(const char* DLR_NONNULL text, int r, int g, int b, int a) {
+    SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, text, (SDL_Color) {r, g, b, a});
+    assert(surface != NULL);
+
+    SDL_Surface* xSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
+    assert(xSurface != NULL);
+
+    SDL_FreeSurface(surface);
+    return xSurface;
+}
+
+static void textureDestroy(void* DLR_NONNULL texture) {
+    SDL_FreeSurface(texture);
+}
+
+static void textureMetrics(void* DLR_NONNULL texture, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    *width = ((SDL_Surface*) texture)->w;
+    *height = ((SDL_Surface*) texture)->h;
+}
+
+static void* DLR_NONNULL textureData(void* DLR_NONNULL texture) {
+    return ((SDL_Surface*) texture)->pixels;
+}
+
+static void textMetrics(const char* DLR_NONNULL text, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    TTF_SizeUTF8(gFont, text, width, height);
 }
 
 int main(void) {
@@ -92,7 +120,16 @@ int main(void) {
 
     SDL_GL_SetSwapInterval(1);
 
-    dlrInit(SDL_malloc, SDL_realloc, SDL_free);
+    dlrInit(
+        SDL_malloc,
+        SDL_realloc,
+        SDL_free,
+        textTextureCreate,
+        textureDestroy,
+        textureMetrics,
+        textureData,
+        textMetrics
+    );
     loop(window);
     dlrQuit();
 
