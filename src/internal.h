@@ -10,6 +10,7 @@
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
 
+// assume const:
 extern DlrMalloc internalMallocFunc;
 extern DlrRealloc internalReallocFunc;
 extern DlrFree internalFreeFunc;
