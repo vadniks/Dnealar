@@ -10,11 +10,11 @@
 #include "renderer.h"
 
 struct Renderer {
-
+    int todo;
 };
 
 Renderer* DLR_NONNULL rendererCreate(const CompoundShader* DLR_NONNULL shader) {
-
+    return (void*) 1;
 }
 
 void rendererDestroy(Renderer* DLR_NONNULL renderer) {

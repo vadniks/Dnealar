@@ -41,4 +41,4 @@ DLR_EXPORT void dlrSetFreeFunction(DlrFree free);
 DLR_EXPORT void dlrInit(void);
 DLR_EXPORT void dlrQuit(void);
 DLR_EXPORT void dlrSetViewport(int width, int height);
-DLR_EXPORT void dlrUpdateFrame(void);
+DLR_EXPORT void dlrUpdateFrame(int r, int g, int b, int a);
