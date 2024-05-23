@@ -9,6 +9,7 @@
 
 #include "internal.h"
 #include "context.h"
+#include "renderer.h"
 #include <dnealar/dnealar.h>
 #include <GL/glew.h>
 
@@ -26,9 +27,11 @@ void dlrInit(DlrMalloc malloc, DlrRealloc realloc, DlrFree free) {
     internalFreeFunc = free;
 
     internalContext = internalMalloc(sizeof(DlrContext));
+    rendererInit();
 }
 
 void dlrQuit(void) {
+    rendererQuit();
     internalFree(internalContext);
 }
 

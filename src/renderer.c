@@ -21,20 +21,20 @@ typedef struct Renderer Renderer;
 static Renderer* DLR_NULLABLE gRenderer = NULL;
 
 static const char* const gVertexShader =
-    "#version 330 core"
-    "layout (location = 0) in vec2 pos;"
-    "uniform mat4 projection;"
-    "void main() {"
-    "   gl_Position = projection * model * vec4(pos, 0.0, 1.0);"
-    "}";
+    "#version 330 core\n"
+    "layout (location = 0) in vec2 pos;\n"
+    "uniform mat4 projection;\n"
+    "void main() {\n"
+    "   gl_Position = projection * vec4(pos, 0.0, 1.0);\n"
+    "}\n";
 
 static const char* const gFragmentShader =
-    "#version 330 core"
-    "out vec4 colorOut;"
-    "uniform vec4 color;"
-    "void main() {"
-    "   colorOut = color;"
-    "}";
+    "#version 330 core\n"
+    "out vec4 colorOut;\n"
+    "uniform vec4 color;\n"
+    "void main() {\n"
+    "   colorOut = color;\n"
+    "}\n";
 
 void rendererInit(void) {
     gRenderer = internalMalloc(sizeof *gRenderer);
