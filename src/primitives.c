@@ -18,8 +18,8 @@ void dlrLine(int x0, int y0, int x1, int y1, int size, int r, int g, int b, int 
     rendererDrawLine((vec2) {(float) x0, (float) y0}, (vec2) {(float) x1, (float) y1}, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a});
 }
 
-void dlrRectangle(int x, int y, int w, int h, int r, int g, int b, int a, bool fill) {
-
+void dlrRectangle(int x, int y, int w, int h, int r, int size, int g, int b, int a, bool fill) {
+    rendererDrawRectangle((vec2) {(float) x, (float) y}, (vec2) {(float) w, (float) h}, (float) size, (vec4) {(float) r, (float) g, (float) b, (float) a}, fill);
 }
 
 void dlrCircle(int x, int y, int radius, int r, int g, int b, int a, bool fill) {

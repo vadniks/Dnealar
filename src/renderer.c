@@ -103,7 +103,49 @@ void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNU
 }
 
 void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNULL dimension, float pointSize, const vec4 DLR_NONNULL color, bool filled) {
+    glBindVertexArray(gRenderer->vao);
 
+    const float vertices[] = {
+        position[0] + dimension[0], position[1],
+        position[0] + dimension[0], position[1] + dimension[1],
+        position[0], position[1] + dimension[1],
+        position[0], position[1]
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, gRenderer->vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
+    glEnableVertexAttribArray(0);
+
+    const unsigned indicesFilled[] = {
+        0, 1, 3,
+        1, 2, 3
+    };
+
+    const unsigned indicesUnfilled[] = {
+        0, 1, 2, 3,
+        1, 2, 0, 3
+    };
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gRenderer->ebo);
+    glBufferData(
+        GL_ELEMENT_ARRAY_BUFFER,
+        filled ? sizeof(indicesFilled) : sizeof(indicesUnfilled),
+        filled ? indicesFilled : indicesUnfilled,
+        GL_DYNAMIC_DRAW
+    );
+
+    compoundShaderUse(gRenderer->shader);
+    compoundShaderSetMat4(gRenderer->shader, "projection", internalContext->projection);
+    compoundShaderSetVec4(gRenderer->shader, "color", color);
+
+    glPointSize(filled ? 1.0f : (float) pointSize);
+    glDrawElements(filled ? GL_TRIANGLES : GL_LINES, filled ? 6 : 8, GL_UNSIGNED_INT, (void*) 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) {

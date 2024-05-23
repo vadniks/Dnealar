@@ -19,6 +19,8 @@
 static void render(void) {
     dlrPoint(100, 100, 5, 255, 255, 255, 255);
     dlrLine(10, 10, 90, 90, 1, 255, 255, 255, 255);
+    dlrRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
+    dlrRectangle(220, 170, 100, 50, 10, 255, 255, 255, 255, false);
 }
 
 static void loop(SDL_Window* window) {
