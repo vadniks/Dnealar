@@ -12,6 +12,25 @@
 #include <dnealar/widgets.h>
 #include <dnealar/dnealar.h>
 
+void dlrWidgetsText(const char* DLR_NONNULL text, int x, int y, int r, int g, int b, int a) {
+    void* rawTexture = internalTextTextureCreate(text, r, g, b, a);
+
+    int textWidth, textHeight;
+    internalTextureMetrics(rawTexture, &textWidth, &textHeight);
+
+    DlrTexture* texture = dlrTextureCreate(textWidth, textHeight, internalTextureData(rawTexture));
+    rendererDrawTexture(
+        texture,
+        (vec2) {(float) x, (float) y},
+        (vec2) {(float) textWidth, (float) textHeight},
+        0.0f,
+        (vec4) {1.0f, 1.0f, 1.0f, 1.0f}
+    );
+    dlrTextureDestroy(texture);
+
+    internalTextureDestroy(rawTexture);
+}
+
 bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
     int textWidth, textHeight;
     internalTextMetrics(text, &textWidth, &textHeight);
@@ -33,17 +52,7 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
         false
     );
 
-    void* rawTexture = internalTextTextureCreate(text, r, g, b, a);
-    DlrTexture* texture = dlrTextureCreate(textWidth, textHeight, internalTextureData(rawTexture));
-    rendererDrawTexture(
-        texture,
-        (vec2) {(float) x + 5.0f, (float) y + 5.0f},
-        (vec2) {(float) textWidth, (float) textHeight},
-        0.0f,
-        (vec4) {1.0f, 1.0f, 1.0f, 1.0f}
-    );
-    dlrTextureDestroy(texture);
-    internalTextureDestroy(rawTexture);
+    dlrWidgetsText(text, x + 5, y + 5, r, g, b, a);
 
     bool clicked = withinBounds && internalMouseButtonDown;
     if (clicked)
