@@ -13,13 +13,15 @@
 #include <dnealar/dnealar.h>
 
 bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
-    int r, g, b, a;
-    dlrDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
-
     int textWidth, textHeight;
     internalTextMetrics(text, &textWidth, &textHeight);
 
     const int width = textWidth + 10, height = textHeight + 10;
+
+//    const bool withinBounds =
+
+    int r, g, b, a;
+    internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
 
     rendererDrawRectangle(
         (vec2) {(float) x, (float) y},

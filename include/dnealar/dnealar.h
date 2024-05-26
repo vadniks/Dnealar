@@ -57,4 +57,3 @@ DLR_EXPORT void dlrInit(
 DLR_EXPORT void dlrQuit(void);
 DLR_EXPORT void dlrSetViewport(int width, int height);
 DLR_EXPORT void dlrUpdateFrame(void);
-DLR_EXPORT void dlrDecodeColorChannels(int color, int* DLR_NONNULL r, int* DLR_NONNULL g, int* DLR_NONNULL b, int* DLR_NONNULL a);

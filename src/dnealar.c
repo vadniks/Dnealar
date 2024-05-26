@@ -62,18 +62,8 @@ void dlrSetViewport(int width, int height) {
 
 void dlrUpdateFrame(void) {
     int r, g, b, a;
-    dlrDecodeColorChannels(dlrBackgroundColor, &r, &g, &b, &a);
+    internalDecodeColorChannels(dlrBackgroundColor, &r, &g, &b, &a);
 
     glClearColor((float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void dlrDecodeColorChannels(int color, int* DLR_NONNULL r, int* DLR_NONNULL g, int* DLR_NONNULL b, int* DLR_NONNULL a) {
-    const int probe = 0x12345678;
-    internalAssert(*((dlrByte*) &probe) == 0x78);
-
-    *r = (color >> 0) & 0xff;
-    *g = (color >> 8) & 0xff;
-    *b = (color >> 16) & 0xff;
-    *a = (color >> 24) & 0xff;
 }

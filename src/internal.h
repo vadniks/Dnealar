@@ -28,3 +28,4 @@ extern DlrTextMetrics internalTextMetrics;
 extern mat4 internalProjection;
 
 void internalAssert(bool condition);
+void internalDecodeColorChannels(int color, int* DLR_NONNULL r, int* DLR_NONNULL g, int* DLR_NONNULL b, int* DLR_NONNULL a);

@@ -27,3 +27,13 @@ void internalAssert(bool condition) {
     if (!condition)
         abort();
 }
+
+void internalDecodeColorChannels(int color, int* DLR_NONNULL r, int* DLR_NONNULL g, int* DLR_NONNULL b, int* DLR_NONNULL a) {
+    const int probe = 0x12345678;
+    internalAssert(*((dlrByte*) &probe) == 0x78);
+
+    *r = (color >> 0) & 0xff;
+    *g = (color >> 8) & 0xff;
+    *b = (color >> 16) & 0xff;
+    *a = (color >> 24) & 0xff;
+}
