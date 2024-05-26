@@ -25,7 +25,11 @@ extern DlrTextureData internalTextureData;
 // assume const:
 extern DlrTextMetrics internalTextMetrics;
 
+// assume const:
 extern mat4 internalProjection;
+
+// assume const:
+extern int internalMouseX, internalMouseY;
 
 void internalAssert(bool condition);
 void internalDecodeColorChannels(int color, int* DLR_NONNULL r, int* DLR_NONNULL g, int* DLR_NONNULL b, int* DLR_NONNULL a);

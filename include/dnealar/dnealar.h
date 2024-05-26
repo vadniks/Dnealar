@@ -57,3 +57,4 @@ DLR_EXPORT void dlrInit(
 DLR_EXPORT void dlrQuit(void);
 DLR_EXPORT void dlrSetViewport(int width, int height);
 DLR_EXPORT void dlrUpdateFrame(void);
+DLR_EXPORT void dlrUpdateMousePosition(int x, int y);

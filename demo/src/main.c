@@ -53,6 +53,9 @@ static void loop(SDL_Window* window) {
             switch (event.type) {
                 case SDL_QUIT:
                     return;
+                case SDL_MOUSEMOTION:
+                    dlrUpdateMousePosition(event.motion.x, event.motion.y);
+                    break;
             }
         }
 

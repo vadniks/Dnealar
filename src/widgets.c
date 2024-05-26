@@ -18,10 +18,12 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
 
     const int width = textWidth + 10, height = textHeight + 10;
 
-//    const bool withinBounds =
+    const bool withinBounds =
+        internalMouseX >= x && internalMouseX <= x + width &&
+        internalMouseY >= y && internalMouseY <= y + height;
 
     int r, g, b, a;
-    internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
+    internalDecodeColorChannels(withinBounds ? dlrHoverColor : dlrForegroundColor, &r, &g, &b, &a);
 
     rendererDrawRectangle(
         (vec2) {(float) x, (float) y},
