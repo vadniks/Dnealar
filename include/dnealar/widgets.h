@@ -12,5 +12,5 @@
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
 
-DLR_EXPORT void dlrWidgetsText(const char* DLR_NONNULL text, int x, int y, int r, int g, int b, int a);
+DLR_EXPORT void dlrWidgetsText(const char* DLR_NONNULL text, int x, int y);
 DLR_EXPORT bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y);

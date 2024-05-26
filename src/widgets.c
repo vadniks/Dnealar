@@ -12,7 +12,7 @@
 #include <dnealar/widgets.h>
 #include <dnealar/dnealar.h>
 
-void dlrWidgetsText(const char* DLR_NONNULL text, int x, int y, int r, int g, int b, int a) {
+static void drawText(const char* DLR_NONNULL text, int x, int y, int r, int g, int b, int a) {
     void* rawTexture = internalTextTextureCreate(text, r, g, b, a);
 
     int textWidth, textHeight;
@@ -29,6 +29,12 @@ void dlrWidgetsText(const char* DLR_NONNULL text, int x, int y, int r, int g, in
     dlrTextureDestroy(texture);
 
     internalTextureDestroy(rawTexture);
+}
+
+void dlrWidgetsText(const char* DLR_NONNULL text, int x, int y) {
+    int r, g, b, a;
+    internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
+    drawText(text, x, y, r, g, b, a);
 }
 
 bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
@@ -52,7 +58,7 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
         false
     );
 
-    dlrWidgetsText(text, x + 5, y + 5, r, g, b, a);
+    drawText(text, x + 5, y + 5, r, g, b, a);
 
     bool clicked = withinBounds && internalMouseButtonDown;
     if (clicked)

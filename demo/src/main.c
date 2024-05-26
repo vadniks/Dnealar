@@ -20,7 +20,9 @@
 static TTF_Font* gFont = NULL;
 
 static void render(void) {
-    if (dlrWidgetsButton("Button", 10, 10))
+    dlrWidgetsText("Text", 0, 0);
+
+    if (dlrWidgetsButton("Button", 50, 0))
         SDL_Log("button clicked");
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
