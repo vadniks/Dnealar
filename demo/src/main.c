@@ -9,6 +9,7 @@
 
 #include <dnealar/dnealar.h>
 #include <dnealar/primitives.h>
+#include <dnealar/widgets.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
@@ -19,21 +20,23 @@
 static TTF_Font* gFont = NULL;
 
 static void render(void) {
-    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
-    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
-    dlrPrimitivesRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
-    dlrPrimitivesRectangle(220, 170, 100, 50, 5, 255, 255, 255, 255, false);
-    dlrPrimitivesCircle(300, 300, 50, 5, 255, 255, 255, 255, false);
-    dlrPrimitivesCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
+    dlrWidgetsButton("Button", 10, 10);
 
-    SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, "Hello World!", (SDL_Color) {255, 255, 255, 255});
-    SDL_Surface* xSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
-    SDL_FreeSurface(surface);
-    assert(xSurface != NULL);
-    DlrTexture* texture = dlrTextureCreate(xSurface->w, xSurface->h, xSurface->pixels);
-    SDL_FreeSurface(xSurface);
-    dlrPrimitivesTexture(texture, 500, 0, dlrTextureWidth(texture), dlrTextureHeight(texture), 0.0f, 255, 255, 255, 255);
-    dlrTextureDestroy(texture);
+//    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
+//    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
+//    dlrPrimitivesRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
+//    dlrPrimitivesRectangle(220, 170, 100, 50, 5, 255, 255, 255, 255, false);
+//    dlrPrimitivesCircle(300, 300, 50, 5, 255, 255, 255, 255, false);
+//    dlrPrimitivesCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
+//
+//    SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, "Hello World!", (SDL_Color) {255, 255, 255, 255});
+//    SDL_Surface* xSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
+//    SDL_FreeSurface(surface);
+//    assert(xSurface != NULL);
+//    DlrTexture* texture = dlrTextureCreate(xSurface->w, xSurface->h, xSurface->pixels);
+//    SDL_FreeSurface(xSurface);
+//    dlrPrimitivesTexture(texture, 500, 0, dlrTextureWidth(texture), dlrTextureHeight(texture), 0.0f, 255, 255, 255, 255);
+//    dlrTextureDestroy(texture);
 
     SDL_Delay(1000 / 60);
 }

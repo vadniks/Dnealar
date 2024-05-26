@@ -8,9 +8,37 @@
 */
 
 #include "internal.h"
+#include "renderer.h"
 #include <dnealar/widgets.h>
+#include <dnealar/dnealar.h>
 
 bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
+    int r, g, b, a;
+    dlrDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
+
+    int textWidth, textHeight;
+    internalTextMetrics(text, &textWidth, &textHeight);
+
+    const int width = textWidth + 10, height = textHeight + 10;
+
+    rendererDrawRectangle(
+        (vec2) {(float) x, (float) y},
+        (vec2) {(float) width, (float) height},
+        1,
+        (vec4) {(float) r, (float) g, (float) b, (float) a},
+        false
+    );
+
+    void* rawTexture = internalTextTextureCreate(text, r, g, b, a);
+    DlrTexture* texture = dlrTextureCreate(textWidth, textHeight, internalTextureData(rawTexture));
+    rendererDrawTexture(
+        texture,
+        (vec2) {(float) x + 5.0f, (float) y + 5.0f},
+        (vec2) {(float) textWidth, (float) textHeight},
+        0.0f,
+        (vec4) {(float) r, (float) g, (float) b, (float) a});
+    dlrTextureDestroy(texture);
+    internalTextureDestroy(rawTexture);
 
     return false;
 }
