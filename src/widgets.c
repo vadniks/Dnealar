@@ -29,7 +29,7 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
         (vec2) {(float) x, (float) y},
         (vec2) {(float) width, (float) height},
         1,
-        (vec4) {(float) r, (float) g, (float) b, (float) a},
+        (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f},
         false
     );
 
@@ -40,7 +40,8 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
         (vec2) {(float) x + 5.0f, (float) y + 5.0f},
         (vec2) {(float) textWidth, (float) textHeight},
         0.0f,
-        (vec4) {(float) r, (float) g, (float) b, (float) a});
+        (vec4) {1.0f, 1.0f, 1.0f, 1.0f}
+    );
     dlrTextureDestroy(texture);
     internalTextureDestroy(rawTexture);
 
