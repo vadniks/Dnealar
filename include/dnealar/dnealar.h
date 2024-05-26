@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <stdbool.h>
+
 #if !defined(__GNUC__) || !defined(__STDC__) || __STDC_VERSION__ < 201710L // C17
 #   error
 #endif
@@ -58,3 +60,4 @@ DLR_EXPORT void dlrQuit(void);
 DLR_EXPORT void dlrSetViewport(int width, int height);
 DLR_EXPORT void dlrUpdateFrame(void);
 DLR_EXPORT void dlrUpdateMousePosition(int x, int y);
+DLR_EXPORT void dlrUpdateMouseButtonState(bool down);

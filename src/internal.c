@@ -24,6 +24,7 @@ DlrTextMetrics internalTextMetrics = NULL;
 mat4 internalProjection = {0};
 
 int internalMouseX = 0, internalMouseY = 0;
+bool internalMouseButtonDown = false;
 
 void internalAssert(bool condition) {
     if (!condition)

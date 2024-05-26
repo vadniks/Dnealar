@@ -45,5 +45,9 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
     dlrTextureDestroy(texture);
     internalTextureDestroy(rawTexture);
 
-    return false;
+    bool clicked = withinBounds && internalMouseButtonDown;
+    if (clicked)
+        internalMouseButtonDown = false;
+
+    return clicked;
 }

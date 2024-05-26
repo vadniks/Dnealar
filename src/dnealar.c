@@ -72,3 +72,7 @@ void dlrUpdateMousePosition(int x, int y) {
     internalMouseX = x;
     internalMouseY = y;
 }
+
+void dlrUpdateMouseButtonState(bool down) {
+    internalMouseButtonDown = down;
+}

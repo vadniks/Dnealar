@@ -20,7 +20,8 @@
 static TTF_Font* gFont = NULL;
 
 static void render(void) {
-    dlrWidgetsButton("Button", 10, 10);
+    if (dlrWidgetsButton("Button", 10, 10))
+        SDL_Log("button clicked");
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
@@ -55,6 +56,12 @@ static void loop(SDL_Window* window) {
                     return;
                 case SDL_MOUSEMOTION:
                     dlrUpdateMousePosition(event.motion.x, event.motion.y);
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    dlrUpdateMouseButtonState(true);
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    dlrUpdateMouseButtonState(false);
                     break;
             }
         }
