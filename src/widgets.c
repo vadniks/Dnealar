@@ -37,6 +37,10 @@ void dlrWidgetsText(const char* DLR_NONNULL text, int fontSize, int x, int y) {
     drawText(text, fontSize, x, y, r, g, b, a);
 }
 
+void dlrWidgetsTextSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    internalTextMetrics(text, fontSize, width, height);
+}
+
 bool dlrWidgetsButton(const char* DLR_NONNULL text, int fontSize, int x, int y) {
     int textWidth, textHeight;
     internalTextMetrics(text, fontSize, &textWidth, &textHeight);
@@ -65,4 +69,45 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int fontSize, int x, int y) 
         internalMouseButtonDown = false;
 
     return clicked;
+}
+
+void dlrWidgetsButtonSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    internalTextMetrics(text, fontSize, width, height);
+    (*width) += 10;
+    (*height) += 10;
+}
+
+DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, bool checked, int x, int y) {
+    int textWidth, textHeight;
+    internalTextMetrics(text, fontSize, &textWidth, &textHeight);
+
+    const int width = textWidth + 5 + textHeight, height = textHeight;
+
+    const bool withinBounds =
+        internalMouseX >= x && internalMouseX <= x + width &&
+        internalMouseY >= y && internalMouseY <= y + height;
+
+    int r, g, b, a;
+    internalDecodeColorChannels(withinBounds ? dlrHoverColor : dlrForegroundColor, &r, &g, &b, &a);
+
+    rendererDrawRectangle(
+        (vec2) {(float) x, (float) y},
+        (vec2) {(float) textHeight, (float) textHeight},
+        1,
+        (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f},
+        checked
+    );
+
+    drawText(text, fontSize, x + 5 + textHeight, y, r, g, b, a);
+
+    bool clicked = withinBounds && internalMouseButtonDown;
+    if (clicked)
+        internalMouseButtonDown = false;
+
+    return clicked;
+}
+
+DLR_EXPORT void dlrWidgetsCheckboxSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    internalTextMetrics(text, fontSize, width, height);
+    (*width) += 5 + *height;
 }

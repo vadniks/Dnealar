@@ -29,6 +29,10 @@ static void render(void) {
     if (dlrWidgetsButton("Button", FONT_SIZE_DEFAULT, 50, 0))
         SDL_Log("button clicked");
 
+    static bool clicked = false;
+    if (dlrWidgetsCheckbox("Checkbox", FONT_SIZE_DEFAULT, clicked, 150, 0))
+        clicked = !clicked;
+
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
 //    dlrPrimitivesRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
