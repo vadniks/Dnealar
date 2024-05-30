@@ -33,6 +33,8 @@ static void render(void) {
     if (dlrWidgetsCheckbox("Checkbox", FONT_SIZE_DEFAULT, clicked, false, 150, 0))
         clicked = !clicked;
 
+    dlrWidgetsInfiniteProgressBar((int) SDL_GetTicks(), FONT_SIZE_DEFAULT, 300, 0);
+
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
 //    dlrPrimitivesRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
@@ -132,7 +134,7 @@ int main(void) {
     const int windowMinimalWidth = 16 * 50, windowMinimalHeight = 9 * 50;
 
     SDL_Window* window = SDL_CreateWindow(
-        "Neglest",
+        "Dnealar",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         windowMinimalWidth,

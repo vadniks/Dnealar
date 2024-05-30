@@ -12,6 +12,15 @@
 #include <dnealar/widgets.h>
 #include <dnealar/dnealar.h>
 
+typedef enum {
+    INFINITE_PROGRESS_BAR_STATE_A = 150,
+    INFINITE_PROGRESS_BAR_STATE_B = 300,
+    INFINITE_PROGRESS_BAR_STATE_C = 450,
+    INFINITE_PROGRESS_BAR_STATE_D = 600,
+    INFINITE_PROGRESS_BAR_STATE_E = 750,
+    INFINITE_PROGRESS_BAR_STATE_F = 1000
+} InfiniteProgressBarState;
+
 static void drawText(const char* DLR_NONNULL text, int fontSize, int x, int y, int r, int g, int b, int a) {
     void* rawTexture = internalTextTextureCreate(text, fontSize, r, g, b, a);
 
@@ -119,4 +128,31 @@ DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, b
 DLR_EXPORT void dlrWidgetsCheckboxSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
     internalTextMetrics(text, fontSize, width, height);
     (*width) += 5 + *height;
+}
+
+DLR_EXPORT void dlrWidgetsInfiniteProgressBar(int millisSinceStart, int fontSize, int x, int y) {
+    const int interval = millisSinceStart % INFINITE_PROGRESS_BAR_STATE_F;
+
+    const char* string;
+    if (INFINITE_PROGRESS_BAR_STATE_A >= interval)
+        string = "==----------";
+    else if (INFINITE_PROGRESS_BAR_STATE_B >= interval)
+        string = "--==--------";
+    else if (INFINITE_PROGRESS_BAR_STATE_C >= interval)
+        string = "----==------";
+    else if (INFINITE_PROGRESS_BAR_STATE_D >= interval)
+        string = "------==----";
+    else if (INFINITE_PROGRESS_BAR_STATE_E >= interval)
+        string = "--------==--";
+    else if (INFINITE_PROGRESS_BAR_STATE_F >= interval)
+        string = "----------==";
+
+    int r, g, b, a;
+    internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
+
+    drawText(string, fontSize, x, y, r, g, b, a);
+}
+
+DLR_EXPORT void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DLR_NONNULL y) {
+    internalTextMetrics("==----------", fontSize, x, y);
 }
