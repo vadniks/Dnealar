@@ -12,6 +12,9 @@
 #include <dnealar/dnealar.h>
 #include <stdbool.h>
 
+struct DlrWidgetsFieldState;
+typedef struct DlrWidgetsFieldState DlrWidgetsFieldState;
+
 DLR_EXPORT void dlrWidgetsText(const char* DLR_NONNULL text, int fontSize, int x, int y);
 DLR_EXPORT void dlrWidgetsTextSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
@@ -23,3 +26,9 @@ DLR_EXPORT void dlrWidgetsCheckboxSize(const char* DLR_NONNULL text, int fontSiz
 
 DLR_EXPORT void dlrWidgetsInfiniteProgressBar(int millisSinceStart, int fontSize, int x, int y);
 DLR_EXPORT void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DLR_NONNULL y);
+
+DLR_EXPORT DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void);
+DLR_EXPORT void dlrWidgetsFieldStateDestroy(DlrWidgetsFieldState* DLR_NONNULL state);
+DLR_EXPORT const char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL state);
+DLR_EXPORT void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width);
+DLR_EXPORT void dlrWidgetsFieldSize(int fontSize, int width);

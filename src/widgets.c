@@ -11,6 +11,7 @@
 #include "renderer.h"
 #include <dnealar/widgets.h>
 #include <dnealar/dnealar.h>
+#include <stddef.h>
 
 typedef enum {
     INFINITE_PROGRESS_BAR_STATE_A = 150,
@@ -20,6 +21,11 @@ typedef enum {
     INFINITE_PROGRESS_BAR_STATE_E = 750,
     INFINITE_PROGRESS_BAR_STATE_F = 1000
 } InfiniteProgressBarState;
+
+struct DlrWidgetsFieldState {
+    int* DLR_NULLABLE glyphs;
+    int length;
+};
 
 static void drawText(const char* DLR_NONNULL text, int fontSize, int x, int y, int r, int g, int b, int a) {
     void* rawTexture = internalTextTextureCreate(text, fontSize, r, g, b, a);
@@ -155,4 +161,46 @@ DLR_EXPORT void dlrWidgetsInfiniteProgressBar(int millisSinceStart, int fontSize
 
 DLR_EXPORT void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DLR_NONNULL y) {
     internalTextMetrics("==----------", fontSize, x, y);
+}
+
+DLR_EXPORT DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void) {
+    DlrWidgetsFieldState* state = internalMalloc(sizeof *state);
+    state->glyphs = NULL;
+    state->length = 0;
+    return state;
+}
+
+DLR_EXPORT void dlrWidgetsFieldStateDestroy(DlrWidgetsFieldState* DLR_NONNULL state) {
+    internalFree(state);
+}
+
+DLR_EXPORT const char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL state) {
+    if (state->length == 0)
+        return NULL;
+
+    char* text = NULL;
+    int textLength = 0;
+    for (int i = 0; i < state->length; i++) {
+
+        int j = 0;
+        int* glyphStart = &(state->glyphs[i]);
+        while (*glyphStart != 0 && j < 4) {
+            text = internalRealloc(text, ++textLength);
+            text[textLength - 1] = (char) *((dlrByte*) glyphStart);
+            j++;
+        }
+    }
+
+    text = internalRealloc(text, ++textLength);
+    text[textLength - 1] = 0;
+
+    return text;
+}
+
+DLR_EXPORT void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width) {
+
+}
+
+void dlrWidgetsFieldSize(int fontSize, int width) {
+
 }
