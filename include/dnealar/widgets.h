@@ -18,5 +18,5 @@ DLR_EXPORT void dlrWidgetsTextSize(const char* DLR_NONNULL text, int fontSize, i
 DLR_EXPORT bool dlrWidgetsButton(const char* DLR_NONNULL text, int fontSize, int x, int y);
 DLR_EXPORT void dlrWidgetsButtonSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
-DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, bool checked, int x, int y);
+DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, bool checked, bool square, int x, int y);
 DLR_EXPORT void dlrWidgetsCheckboxSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);

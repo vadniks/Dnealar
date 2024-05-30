@@ -30,7 +30,7 @@ static void render(void) {
         SDL_Log("button clicked");
 
     static bool clicked = false;
-    if (dlrWidgetsCheckbox("Checkbox", FONT_SIZE_DEFAULT, clicked, 150, 0))
+    if (dlrWidgetsCheckbox("Checkbox", FONT_SIZE_DEFAULT, clicked, false, 150, 0))
         clicked = !clicked;
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);

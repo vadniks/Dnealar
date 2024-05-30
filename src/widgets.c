@@ -77,7 +77,7 @@ void dlrWidgetsButtonSize(const char* DLR_NONNULL text, int fontSize, int* DLR_N
     (*height) += 10;
 }
 
-DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, bool checked, int x, int y) {
+DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, bool checked, bool square, int x, int y) {
     int textWidth, textHeight;
     internalTextMetrics(text, fontSize, &textWidth, &textHeight);
 
@@ -90,13 +90,22 @@ DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, b
     int r, g, b, a;
     internalDecodeColorChannels(withinBounds ? dlrHoverColor : dlrForegroundColor, &r, &g, &b, &a);
 
-    rendererDrawRectangle(
-        (vec2) {(float) x, (float) y},
-        (vec2) {(float) textHeight, (float) textHeight},
-        1,
-        (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f},
-        checked
-    );
+    if (square)
+        rendererDrawRectangle(
+            (vec2) {(float) x, (float) y},
+            (vec2) {(float) textHeight, (float) textHeight},
+            1,
+            (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f},
+            checked
+        );
+    else
+        rendererDrawCircle(
+            (vec2) {(float) x + (float) textHeight / 2.0f, (float) y + (float) textHeight / 2.0f},
+            textHeight / 2 - 4,
+            1,
+            (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f},
+            checked
+        );
 
     drawText(text, fontSize, x + 5 + textHeight, y, r, g, b, a);
 
