@@ -17,12 +17,16 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+enum FontSize {
+    FONT_SIZE_DEFAULT = 16
+};
+
 static TTF_Font* gFont = NULL;
 
 static void render(void) {
-    dlrWidgetsText("Text", 0, 0);
+    dlrWidgetsText("Text", FONT_SIZE_DEFAULT, 0, 0);
 
-    if (dlrWidgetsButton("Button", 50, 0))
+    if (dlrWidgetsButton("Button", FONT_SIZE_DEFAULT, 50, 0))
         SDL_Log("button clicked");
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
@@ -74,7 +78,9 @@ static void loop(SDL_Window* window) {
     }
 }
 
-static void* DLR_NONNULL textTextureCreate(const char* DLR_NONNULL text, int r, int g, int b, int a) {
+static void* DLR_NONNULL textTextureCreate(const char* DLR_NONNULL text, int fontSize, int r, int g, int b, int a) {
+    assert(fontSize == FONT_SIZE_DEFAULT);
+
     SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, text, (SDL_Color) {r, g, b, a});
     assert(surface != NULL);
 
@@ -98,7 +104,8 @@ static void* DLR_NONNULL textureData(void* DLR_NONNULL texture) {
     return ((SDL_Surface*) texture)->pixels;
 }
 
-static void textMetrics(const char* DLR_NONNULL text, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+static void textMetrics(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    assert(fontSize == FONT_SIZE_DEFAULT);
     TTF_SizeUTF8(gFont, text, width, height);
 }
 

@@ -33,12 +33,12 @@ typedef void* DLR_NULLABLE (* DLR_NONNULL DlrMalloc)(unsigned long size);
 typedef void* DLR_NULLABLE (* DLR_NONNULL DlrRealloc)(void* DLR_NULLABLE memory, unsigned long size);
 typedef void (* DLR_NONNULL DlrFree)(void* DLR_NULLABLE memory);
 
-typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextTextureCreate)(const char* DLR_NONNULL text, int r, int g, int b, int a);
+typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextTextureCreate)(const char* DLR_NONNULL text, int fontSize, int r, int g, int b, int a);
 typedef void (* DLR_NONNULL DlrTextureDestroy)(void* DLR_NONNULL texture);
 typedef void (* DLR_NONNULL DlrTextureMetrics)(void* DLR_NONNULL texture, int* DLR_NONNULL width, int* DLR_NONNULL height);
 typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextureData)(void* DLR_NONNULL texture);
 
-typedef void (* DLR_NONNULL DlrTextMetrics)(const char* DLR_NONNULL text, int* DLR_NONNULL width, int* DLR_NONNULL height);
+typedef void (* DLR_NONNULL DlrTextMetrics)(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
 DLR_EXPORT extern int dlrForegroundColor;
 DLR_EXPORT extern int dlrBackgroundColor;

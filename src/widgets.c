@@ -12,8 +12,8 @@
 #include <dnealar/widgets.h>
 #include <dnealar/dnealar.h>
 
-static void drawText(const char* DLR_NONNULL text, int x, int y, int r, int g, int b, int a) {
-    void* rawTexture = internalTextTextureCreate(text, r, g, b, a);
+static void drawText(const char* DLR_NONNULL text, int fontSize, int x, int y, int r, int g, int b, int a) {
+    void* rawTexture = internalTextTextureCreate(text, fontSize, r, g, b, a);
 
     int textWidth, textHeight;
     internalTextureMetrics(rawTexture, &textWidth, &textHeight);
@@ -31,15 +31,15 @@ static void drawText(const char* DLR_NONNULL text, int x, int y, int r, int g, i
     internalTextureDestroy(rawTexture);
 }
 
-void dlrWidgetsText(const char* DLR_NONNULL text, int x, int y) {
+void dlrWidgetsText(const char* DLR_NONNULL text, int fontSize, int x, int y) {
     int r, g, b, a;
     internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
-    drawText(text, x, y, r, g, b, a);
+    drawText(text, fontSize, x, y, r, g, b, a);
 }
 
-bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
+bool dlrWidgetsButton(const char* DLR_NONNULL text, int fontSize, int x, int y) {
     int textWidth, textHeight;
-    internalTextMetrics(text, &textWidth, &textHeight);
+    internalTextMetrics(text, fontSize, &textWidth, &textHeight);
 
     const int width = textWidth + 10, height = textHeight + 10;
 
@@ -58,7 +58,7 @@ bool dlrWidgetsButton(const char* DLR_NONNULL text, int x, int y) {
         false
     );
 
-    drawText(text, x + 5, y + 5, r, g, b, a);
+    drawText(text, fontSize, x + 5, y + 5, r, g, b, a);
 
     bool clicked = withinBounds && internalMouseButtonDown;
     if (clicked)
