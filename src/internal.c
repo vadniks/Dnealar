@@ -26,6 +26,8 @@ mat4 internalProjection = {0};
 int internalMouseX = 0, internalMouseY = 0;
 bool internalMouseButtonDown = false;
 
+const void* DLR_NULLABLE internalActiveField = NULL;
+
 void internalAssert(bool condition) {
     if (!condition)
         abort();

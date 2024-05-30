@@ -29,6 +29,8 @@ DLR_EXPORT void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL
 
 DLR_EXPORT DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void);
 DLR_EXPORT void dlrWidgetsFieldStateDestroy(DlrWidgetsFieldState* DLR_NONNULL state);
-DLR_EXPORT const char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL state);
+DLR_EXPORT char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL state);
 DLR_EXPORT void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width);
 DLR_EXPORT void dlrWidgetsFieldSize(int fontSize, int width);
+
+// TODO: text wrap widget

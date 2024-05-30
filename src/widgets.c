@@ -92,7 +92,7 @@ void dlrWidgetsButtonSize(const char* DLR_NONNULL text, int fontSize, int* DLR_N
     (*height) += 10;
 }
 
-DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, bool checked, bool square, int x, int y) {
+bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, bool checked, bool square, int x, int y) {
     int textWidth, textHeight;
     internalTextMetrics(text, fontSize, &textWidth, &textHeight);
 
@@ -131,12 +131,12 @@ DLR_EXPORT bool dlrWidgetsCheckbox(const char* DLR_NONNULL text, int fontSize, b
     return clicked;
 }
 
-DLR_EXPORT void dlrWidgetsCheckboxSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+void dlrWidgetsCheckboxSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
     internalTextMetrics(text, fontSize, width, height);
     (*width) += 5 + *height;
 }
 
-DLR_EXPORT void dlrWidgetsInfiniteProgressBar(int millisSinceStart, int fontSize, int x, int y) {
+void dlrWidgetsInfiniteProgressBar(int millisSinceStart, int fontSize, int x, int y) {
     const int interval = millisSinceStart % INFINITE_PROGRESS_BAR_STATE_F;
 
     const char* string;
@@ -159,22 +159,22 @@ DLR_EXPORT void dlrWidgetsInfiniteProgressBar(int millisSinceStart, int fontSize
     drawText(string, fontSize, x, y, r, g, b, a);
 }
 
-DLR_EXPORT void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DLR_NONNULL y) {
+void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DLR_NONNULL y) {
     internalTextMetrics("==----------", fontSize, x, y);
 }
 
-DLR_EXPORT DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void) {
+DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void) {
     DlrWidgetsFieldState* state = internalMalloc(sizeof *state);
     state->glyphs = NULL;
     state->length = 0;
     return state;
 }
 
-DLR_EXPORT void dlrWidgetsFieldStateDestroy(DlrWidgetsFieldState* DLR_NONNULL state) {
+void dlrWidgetsFieldStateDestroy(DlrWidgetsFieldState* DLR_NONNULL state) {
     internalFree(state);
 }
 
-DLR_EXPORT const char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL state) {
+char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL state) {
     if (state->length == 0)
         return NULL;
 
@@ -197,8 +197,15 @@ DLR_EXPORT const char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldStat
     return text;
 }
 
-DLR_EXPORT void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width) {
+void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width) {
+    char* const text = dlrWidgetsFieldStateText(state);
 
+    int textWidth, textHeight;
+    internalTextMetrics(text, fontSize, &textWidth, &textHeight);
+
+
+
+    internalFree(text);
 }
 
 void dlrWidgetsFieldSize(int fontSize, int width) {

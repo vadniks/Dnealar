@@ -33,5 +33,8 @@ extern int internalMouseX, internalMouseY;
 // assume non-const
 extern bool internalMouseButtonDown;
 
+// assume non-const
+extern const void* DLR_NULLABLE internalActiveField;
+
 void internalAssert(bool condition);
 void internalDecodeColorChannels(int color, int* DLR_NONNULL r, int* DLR_NONNULL g, int* DLR_NONNULL b, int* DLR_NONNULL a);
