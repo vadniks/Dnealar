@@ -22,6 +22,7 @@ enum FontSize {
 };
 
 static TTF_Font* gFont = NULL;
+static DlrWidgetsFieldState* gFieldState = NULL;
 
 static void render(void) {
     dlrWidgetsText("Text", FONT_SIZE_DEFAULT, 0, 0);
@@ -34,6 +35,8 @@ static void render(void) {
         clicked = !clicked;
 
     dlrWidgetsInfiniteProgressBar((int) SDL_GetTicks(), FONT_SIZE_DEFAULT, 300, 0);
+
+    dlrWidgetsField(gFieldState, FONT_SIZE_DEFAULT, false, 0, 100, 150);
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
@@ -58,6 +61,8 @@ static void loop(SDL_Window* window) {
     int width, height;
     SDL_Event event;
 
+    gFieldState = dlrWidgetsFieldStateCreate();
+
     while (true) {
         SDL_GL_GetDrawableSize(window, &width, &height);
         dlrSetViewport(width, height);
@@ -65,7 +70,7 @@ static void loop(SDL_Window* window) {
         while (SDL_PollEvent(&event) == 1) {
             switch (event.type) {
                 case SDL_QUIT:
-                    return;
+                    goto end;
                 case SDL_MOUSEMOTION:
                     dlrUpdateMousePosition(event.motion.x, event.motion.y);
                     break;
@@ -75,6 +80,15 @@ static void loop(SDL_Window* window) {
                 case SDL_MOUSEBUTTONUP:
                     dlrUpdateMouseButtonState(false);
                     break;
+                case SDL_KEYDOWN:
+                    dlrKeyDown(event.key.keysym.sym == SDLK_BACKSPACE);
+                    break;
+                case SDL_KEYUP:
+                    dlrKeyUp();
+                    break;
+                case SDL_TEXTINPUT:
+                    dlrTextInput(event.text.text);
+                    break;
             }
         }
 
@@ -82,6 +96,9 @@ static void loop(SDL_Window* window) {
         render();
         SDL_GL_SwapWindow(window);
     }
+    end:
+
+    dlrWidgetsFieldStateDestroy(gFieldState);
 }
 
 static void* DLR_NONNULL textTextureCreate(const char* DLR_NONNULL text, int fontSize, int r, int g, int b, int a) {

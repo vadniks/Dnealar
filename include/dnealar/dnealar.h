@@ -61,3 +61,6 @@ DLR_EXPORT void dlrSetViewport(int width, int height);
 DLR_EXPORT void dlrUpdateFrame(void);
 DLR_EXPORT void dlrUpdateMousePosition(int x, int y);
 DLR_EXPORT void dlrUpdateMouseButtonState(bool down);
+DLR_EXPORT void dlrKeyDown(bool erasing);
+DLR_EXPORT void dlrKeyUp(void);
+DLR_EXPORT void dlrTextInput(const char* DLR_NONNULL text);

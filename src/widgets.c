@@ -203,9 +203,47 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
     int textWidth, textHeight;
     internalTextMetrics(text, fontSize, &textWidth, &textHeight);
 
+    const bool active = internalActiveField == state;
+    if (active) {
 
+        if (internalKeyboardInputErasing && state->length > 0) {
+            internalKeyboardInputErasing = false;
+            state->glyphs = internalRealloc(state->glyphs, --(state->length));
+        }
+
+        if (internalKeyboardInputting && textWidth < width) {
+            internalKeyboardInputting = false;
+            state->glyphs = internalRealloc(state->glyphs, ++(state->length));
+            internalAssert(state->glyphs != NULL);
+            state->glyphs[state->length - 1] = internalNextGlyph;
+        }
+    }
+
+    int r, g, b, a;
+    internalDecodeColorChannels(active ? dlrForegroundColor : dlrPassiveColor, &r, &g, &b, &a);
+
+    if (state->length > 0)
+        drawText(text, fontSize, x, y, r, g, b, a);
 
     internalFree(text);
+
+    const int height = textHeight + 5;
+
+    const bool withinBounds =
+        internalMouseX >= x && internalMouseX <= x + width &&
+        internalMouseY >= y && internalMouseY <= y + height;
+
+    if (withinBounds && internalMouseButtonDown) {
+        internalMouseButtonDown = false;
+        internalActiveField = state;
+    }
+
+    rendererDrawLine(
+        (vec2) {(float) x, (float) y + (float) textHeight + 5},
+        (vec2) {(float) x + (float) width, (float) y + (float) textHeight + 5},
+        1,
+        (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f}
+    );
 }
 
 void dlrWidgetsFieldSize(int fontSize, int width) {

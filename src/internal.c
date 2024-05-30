@@ -27,6 +27,9 @@ int internalMouseX = 0, internalMouseY = 0;
 bool internalMouseButtonDown = false;
 
 const void* DLR_NULLABLE internalActiveField = NULL;
+int internalNextGlyph = 0;
+bool internalKeyboardInputting = false;
+bool internalKeyboardInputErasing = false;
 
 void internalAssert(bool condition) {
     if (!condition)

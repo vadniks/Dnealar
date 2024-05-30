@@ -10,6 +10,7 @@
 #include "internal.h"
 #include "renderer.h"
 #include <dnealar/dnealar.h>
+#include <string.h>
 #include <GL/glew.h>
 #include <cglm/cam.h>
 
@@ -75,4 +76,24 @@ void dlrUpdateMousePosition(int x, int y) {
 
 void dlrUpdateMouseButtonState(bool down) {
     internalMouseButtonDown = down;
+}
+
+void dlrKeyDown(bool erasing) {
+    if (erasing)
+        internalKeyboardInputErasing = true;
+}
+
+void dlrKeyUp(void) {
+    internalKeyboardInputting = false;
+    internalKeyboardInputErasing = false;
+}
+
+void dlrTextInput(const char* DLR_NONNULL text) {
+    internalKeyboardInputting = true;
+
+    const int textLength = (int) strnlen(text, sizeof(int));
+    internalAssert(textLength > 0);
+
+    internalNextGlyph = 0;
+    memcpy(&internalNextGlyph, text, textLength);
 }
