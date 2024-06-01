@@ -1,7 +1,8 @@
 
 # A simple, lightweight and flexible OpenGL-based GUI toolkit library
 
-Currently only for Linux systems. Not thread-safe. Supports UTF-8 encoding.
+Currently only for Linux systems. Not thread-safe. Supports UTF-8 encoding. 
+Expects a TTF library to be provided.
 
 Example usage is shown in the demo executable.
 
