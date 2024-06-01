@@ -13,7 +13,6 @@
 #include <dnealar/dnealar.h>
 #include <stddef.h>
 #include <string.h>
-#include <stdio.h>
 
 typedef enum {
     INFINITE_PROGRESS_BAR_STATE_A = 150,
@@ -393,4 +392,8 @@ void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSiz
         1,
         (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f}
     );
+}
+
+int dlrWidgetsWrappedFieldHeight(int height) {
+    return height + 5 + 1;
 }

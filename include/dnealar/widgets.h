@@ -38,3 +38,4 @@ DLR_EXPORT void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fon
 DLR_EXPORT void dlrWidgetsFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
 DLR_EXPORT void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int x, int y, int width, int height);
+DLR_EXPORT int dlrWidgetsWrappedFieldHeight(int height);
