@@ -334,11 +334,35 @@ void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSiz
             }
         }
 
-        if (internalKeyboardInputting && textHeight < height) {
-            internalKeyboardInputting = false;
-            state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
-            internalAssert(state->glyphs != NULL);
-            state->glyphs[state->length - 1] = internalNextGlyph;
+        if (internalKeyboardInputting) {
+            DlrWidgetsFieldState* xState = dlrWidgetsFieldStateCreate();
+            xState->length = state->length + 1;
+            xState->glyphs = internalMalloc(xState->length * sizeof(int));
+
+            for (int i = 0; i < state->length; i++)
+                xState->glyphs[i] = state->glyphs[i];
+            xState->glyphs[state->length] = internalNextGlyph;
+
+            char* DLR_NULLABLE const xText = dlrWidgetsFieldStateText(xState);
+            printf("%s\n", xText);
+            void* DLR_NULLABLE const probe = xText == NULL || state->length == 0 ? NULL : internalWrappedTextTextureCreate(xText, width, fontSize, r, g, b, a);
+
+            int probeWidth = 0, probeHeight = 0;
+            if (probe != NULL)
+                internalTextureMetrics(probe, &probeWidth, &probeHeight);
+
+            if (probe != NULL)
+                internalTextureDestroy(probe);
+            internalFree(xText);
+
+            dlrWidgetsFieldStateDestroy(xState);
+
+            if (probeHeight < height) {
+                internalKeyboardInputting = false;
+                state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
+                internalAssert(state->glyphs != NULL);
+                state->glyphs[state->length - 1] = internalNextGlyph;
+            }
         }
     }
 
