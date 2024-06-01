@@ -62,6 +62,7 @@ static void loop(SDL_Window* window) {
     SDL_Event event;
 
     gFieldState = dlrWidgetsFieldStateCreate();
+    aaa();
 
     while (true) {
         SDL_GL_GetDrawableSize(window, &width, &height);

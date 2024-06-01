@@ -218,7 +218,7 @@ static void drawFilledCircle(const vec2 DLR_NONNULL position, int radius, float 
     }
 }
 
-void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) {
+void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) { // TODO: optimize
     if (!filled)
         drawCircle(positionCenter, radius, pointSize, color);
     else

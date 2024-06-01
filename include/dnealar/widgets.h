@@ -27,6 +27,7 @@ DLR_EXPORT void dlrWidgetsCheckboxSize(const char* DLR_NONNULL text, int fontSiz
 DLR_EXPORT void dlrWidgetsInfiniteProgressBar(int millisSinceStart, int fontSize, int x, int y);
 DLR_EXPORT void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DLR_NONNULL y);
 
+DLR_EXPORT void aaa(void);
 DLR_EXPORT DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void);
 DLR_EXPORT void dlrWidgetsFieldStateDestroy(DlrWidgetsFieldState* DLR_NONNULL state);
 DLR_EXPORT char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL state);

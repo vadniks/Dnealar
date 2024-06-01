@@ -12,6 +12,8 @@
 #include <dnealar/widgets.h>
 #include <dnealar/dnealar.h>
 #include <stddef.h>
+#include <stdio.h>
+#include <string.h>
 
 typedef enum {
     INFINITE_PROGRESS_BAR_STATE_A = 150,
@@ -163,6 +165,21 @@ void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DL
     internalTextMetrics("==----------", fontSize, x, y);
 }
 
+void aaa(void) {
+    DlrWidgetsFieldState* state = internalMalloc(sizeof *state);
+    state->length = 1;
+    state->glyphs = internalMalloc(1 * sizeof(int));
+    state->glyphs[0] = 'a';
+
+    char* text = dlrWidgetsFieldStateText(state);
+
+    printf("|%s|\n", text);
+
+    internalFree(text);
+
+    dlrWidgetsFieldStateDestroy(state);
+}
+
 DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void) {
     DlrWidgetsFieldState* state = internalMalloc(sizeof *state);
     state->glyphs = NULL;
@@ -171,6 +188,7 @@ DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void) {
 }
 
 void dlrWidgetsFieldStateDestroy(DlrWidgetsFieldState* DLR_NONNULL state) {
+    internalFree(state->glyphs);
     internalFree(state);
 }
 
@@ -181,13 +199,13 @@ char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL st
     char* text = NULL;
     int textLength = 0;
     for (int i = 0; i < state->length; i++) {
+        const char* const glyphBytes = (char*) &(state->glyphs[i]);
 
-        int j = 0;
-        int* glyphStart = &(state->glyphs[i]);
-        while (*glyphStart != 0 && j < 4) {
+        for (int j = 0; j < (int) sizeof(int); j++) {
+            if (glyphBytes[j] == 0) break;
             text = internalRealloc(text, ++textLength);
-            text[textLength - 1] = (char) *((dlrByte*) glyphStart);
-            j++;
+            internalAssert(text != NULL);
+            text[textLength - 1] = glyphBytes[i];
         }
     }
 
@@ -198,22 +216,27 @@ char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL st
 }
 
 void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width) {
-    char* const text = dlrWidgetsFieldStateText(state);
+    char* DLR_NULLABLE const text = dlrWidgetsFieldStateText(state);
 
     int textWidth, textHeight;
-    internalTextMetrics(text, fontSize, &textWidth, &textHeight);
+    if (text != NULL)
+        internalTextMetrics(text, fontSize, &textWidth, &textHeight);
+    else {
+        internalTextMetrics("W", fontSize, &textWidth, &textHeight);
+        textWidth = 0;
+    }
 
     const bool active = internalActiveField == state;
     if (active) {
 
         if (internalKeyboardInputErasing && state->length > 0) {
             internalKeyboardInputErasing = false;
-            state->glyphs = internalRealloc(state->glyphs, --(state->length));
+            state->glyphs = internalRealloc(state->glyphs, --(state->length) * sizeof(int));
         }
 
         if (internalKeyboardInputting && textWidth < width) {
             internalKeyboardInputting = false;
-            state->glyphs = internalRealloc(state->glyphs, ++(state->length));
+            state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
             internalAssert(state->glyphs != NULL);
             state->glyphs[state->length - 1] = internalNextGlyph;
         }
@@ -222,8 +245,13 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
     int r, g, b, a;
     internalDecodeColorChannels(active ? dlrForegroundColor : dlrPassiveColor, &r, &g, &b, &a);
 
-    if (state->length > 0)
-        drawText(text, fontSize, x, y, r, g, b, a);
+    if (state->length > 0) {
+//        drawText(text, fontSize, x, y, r, g, b, a);
+        char c;
+        for (int i = 0; (c = (text[i])) != 0; i++)
+            printf("%c", c);
+        printf("\n");
+    }
 
     internalFree(text);
 
