@@ -236,8 +236,15 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
 
     int r, g, b, a;
     internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
-    if (text != NULL)
-        drawText(text, fontSize, x, y, r, g, b, a);
+
+    if (text != NULL) {
+        const int passwordTextSize = (int) strlen(text);
+        char passwordText[passwordTextSize + 1];
+        memset(passwordText, '*', passwordTextSize);
+        passwordText[passwordTextSize] = 0;
+
+        drawText(password ? passwordText : text, fontSize, x, y, r, g, b, a);
+    }
 
     internalFree(text);
 
@@ -253,6 +260,7 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
     }
 
     internalDecodeColorChannels(active ? dlrForegroundColor : dlrPassiveColor, &r, &g, &b, &a);
+
     rendererDrawLine(
         (vec2) {(float) x, (float) y + (float) textHeight + 5},
         (vec2) {(float) x + (float) width, (float) y + (float) textHeight + 5},

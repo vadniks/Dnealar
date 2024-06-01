@@ -38,7 +38,7 @@ static void render(void) {
     dlrWidgetsInfiniteProgressBar((int) SDL_GetTicks(), FONT_SIZE_DEFAULT, 300, 0);
 
     dlrWidgetsField(gFieldState1, FONT_SIZE_DEFAULT, false, 0, 100, 150);
-    dlrWidgetsField(gFieldState2, FONT_SIZE_DEFAULT, false, 160, 100, 150);
+    dlrWidgetsField(gFieldState2, FONT_SIZE_DEFAULT, true, 160, 100, 150);
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
@@ -100,6 +100,16 @@ static void loop(SDL_Window* window) {
         SDL_GL_SwapWindow(window);
     }
     end:
+
+    {
+        char* text1 = dlrWidgetsFieldStateText(gFieldState1);
+        char* text2 = dlrWidgetsFieldStateText(gFieldState2);
+
+        SDL_Log("|%s| |%s|", text1, text2);
+
+        SDL_free(text1);
+        SDL_free(text2);
+    }
 
     dlrWidgetsFieldStateDestroy(gFieldState1);
     dlrWidgetsFieldStateDestroy(gFieldState2);
