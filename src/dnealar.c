@@ -24,6 +24,7 @@ void dlrInit(
     DlrRealloc realloc,
     DlrFree free,
     DlrTextTextureCreate textTextureCreate,
+    DlrWrappedTextTextureCreate wrappedTextTextureCreate,
     DlrTextureDestroy textureDestroy,
     DlrTextureMetrics textureMetrics,
     DlrTextureData textureData,
@@ -42,6 +43,8 @@ void dlrInit(
     internalFree = free;
 
     internalTextTextureCreate = textTextureCreate;
+    internalWrappedTextTextureCreate = wrappedTextTextureCreate;
+
     internalTextureDestroy = textureDestroy;
     internalTextureMetrics = textureMetrics;
     internalTextureData = textureData;

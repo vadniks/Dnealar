@@ -10,11 +10,15 @@
 #include "internal.h"
 #include <stdlib.h>
 
+// the following ones are set up elsewhere
+
 DlrMalloc internalMalloc = NULL;
 DlrRealloc internalRealloc = NULL;
 DlrFree internalFree = NULL;
 
 DlrTextTextureCreate internalTextTextureCreate = NULL;
+DlrWrappedTextTextureCreate internalWrappedTextTextureCreate = NULL;
+
 DlrTextureDestroy internalTextureDestroy = NULL;
 DlrTextureMetrics internalTextureMetrics = NULL;
 DlrTextureData internalTextureData = NULL;

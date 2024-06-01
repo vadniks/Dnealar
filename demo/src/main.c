@@ -128,6 +128,19 @@ static void* DLR_NONNULL textTextureCreate(const char* DLR_NONNULL text, int fon
     return xSurface;
 }
 
+static void* DLR_NONNULL wrappedTextTextureCreate(const char* DLR_NONNULL text, int width, int fontSize, int r, int g, int b, int a) {
+    assert(fontSize == FONT_SIZE_DEFAULT);
+
+    SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped(gFont, text, (SDL_Color) {r, g, b, a}, width);
+    assert(surface != NULL);
+
+    SDL_Surface* xSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
+    assert(xSurface != NULL);
+
+    SDL_FreeSurface(surface);
+    return xSurface;
+}
+
 static void textureDestroy(void* DLR_NONNULL texture) {
     SDL_FreeSurface(texture);
 }
@@ -184,6 +197,7 @@ int main(void) {
         SDL_realloc,
         SDL_free,
         textTextureCreate,
+        wrappedTextTextureCreate,
         textureDestroy,
         textureMetrics,
         textureData,

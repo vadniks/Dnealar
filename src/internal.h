@@ -18,6 +18,9 @@ extern DlrFree internalFree;
 
 // assume const:
 extern DlrTextTextureCreate internalTextTextureCreate;
+extern DlrWrappedTextTextureCreate internalWrappedTextTextureCreate;
+
+// assume const:
 extern DlrTextureDestroy internalTextureDestroy;
 extern DlrTextureMetrics internalTextureMetrics;
 extern DlrTextureData internalTextureData;

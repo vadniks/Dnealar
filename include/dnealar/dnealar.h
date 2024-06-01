@@ -34,6 +34,8 @@ typedef void* DLR_NULLABLE (* DLR_NONNULL DlrRealloc)(void* DLR_NULLABLE memory,
 typedef void (* DLR_NONNULL DlrFree)(void* DLR_NULLABLE memory);
 
 typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextTextureCreate)(const char* DLR_NONNULL text, int fontSize, int r, int g, int b, int a);
+typedef void* DLR_NONNULL (* DLR_NONNULL DlrWrappedTextTextureCreate)(const char* DLR_NONNULL text, int width, int fontSize, int r, int g, int b, int a);
+
 typedef void (* DLR_NONNULL DlrTextureDestroy)(void* DLR_NONNULL texture);
 typedef void (* DLR_NONNULL DlrTextureMetrics)(void* DLR_NONNULL texture, int* DLR_NONNULL width, int* DLR_NONNULL height);
 typedef void* DLR_NONNULL (* DLR_NONNULL DlrTextureData)(void* DLR_NONNULL texture);
@@ -50,6 +52,7 @@ DLR_EXPORT void dlrInit(
     DlrRealloc realloc,
     DlrFree free,
     DlrTextTextureCreate textTextureCreate,
+    DlrWrappedTextTextureCreate wrappedTextTextureCreate,
     DlrTextureDestroy textureDestroy,
     DlrTextureMetrics textureMetrics,
     DlrTextureData textureData,

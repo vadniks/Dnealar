@@ -277,3 +277,11 @@ void dlrWidgetsFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, 
     internalFree(text);
     *height += 5 + 1;
 }
+
+void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int x, int y, int width) {
+    
+}
+
+void dlrWidgetsWrappedFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+
+}
