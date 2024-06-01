@@ -22,7 +22,8 @@ enum FontSize {
 };
 
 static TTF_Font* gFont = NULL;
-static DlrWidgetsFieldState* gFieldState = NULL;
+static DlrWidgetsFieldState* gFieldState1 = NULL;
+static DlrWidgetsFieldState* gFieldState2 = NULL;
 
 static void render(void) {
     dlrWidgetsText("Text", FONT_SIZE_DEFAULT, 0, 0);
@@ -36,7 +37,8 @@ static void render(void) {
 
     dlrWidgetsInfiniteProgressBar((int) SDL_GetTicks(), FONT_SIZE_DEFAULT, 300, 0);
 
-    dlrWidgetsField(gFieldState, FONT_SIZE_DEFAULT, false, 0, 100, 150);
+    dlrWidgetsField(gFieldState1, FONT_SIZE_DEFAULT, false, 0, 100, 150);
+    dlrWidgetsField(gFieldState2, FONT_SIZE_DEFAULT, false, 160, 100, 150);
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
@@ -61,7 +63,8 @@ static void loop(SDL_Window* window) {
     int width, height;
     SDL_Event event;
 
-    gFieldState = dlrWidgetsFieldStateCreate();
+    gFieldState1 = dlrWidgetsFieldStateCreate();
+    gFieldState2 = dlrWidgetsFieldStateCreate();
 
     while (true) {
         SDL_GL_GetDrawableSize(window, &width, &height);
@@ -98,7 +101,8 @@ static void loop(SDL_Window* window) {
     }
     end:
 
-    dlrWidgetsFieldStateDestroy(gFieldState);
+    dlrWidgetsFieldStateDestroy(gFieldState1);
+    dlrWidgetsFieldStateDestroy(gFieldState2);
 }
 
 static void* DLR_NONNULL textTextureCreate(const char* DLR_NONNULL text, int fontSize, int r, int g, int b, int a) {
