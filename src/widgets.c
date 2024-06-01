@@ -279,7 +279,50 @@ void dlrWidgetsFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, 
 }
 
 void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int x, int y, int width) {
-    
+    int r, g, b, a;
+    internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
+
+    char* DLR_NULLABLE const text = dlrWidgetsFieldStateText(state);
+    void* DLR_NULLABLE const texture = text == NULL ? NULL : internalWrappedTextTextureCreate(text, width, fontSize, r, g, b, a);
+
+    int textWidth, textHeight;
+    if (texture != NULL)
+        internalTextureMetrics(texture, &textWidth, &textHeight);
+    else {
+        internalTextMetrics("W", fontSize, &textWidth, &textHeight);
+        textWidth = width;
+    }
+
+    const bool active = internalActiveField == state;
+    if (active) {
+
+        if (internalKeyboardInputErasing && state->length > 0) {
+            internalKeyboardInputErasing = false;
+
+            if (state->length > 1)
+                state->glyphs = internalRealloc(state->glyphs, --(state->length) * sizeof(int));
+            else {
+                internalFree(state->glyphs);
+                state->glyphs = NULL;
+                state->length = 0;
+            }
+        }
+
+        if (internalKeyboardInputting && textWidth < width) {
+            internalKeyboardInputting = false;
+            state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
+            internalAssert(state->glyphs != NULL);
+            state->glyphs[state->length - 1] = internalNextGlyph;
+        }
+    }
+
+    if (text != NULL) {
+        drawText(text, fontSize, x, y, r, g, b, a);
+    }
+
+    if (texture != NULL)
+        internalTextureDestroy(texture);
+    internalFree(text);
 }
 
 void dlrWidgetsWrappedFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
