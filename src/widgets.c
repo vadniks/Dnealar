@@ -206,7 +206,14 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
 
         if (internalKeyboardInputErasing && state->length > 0) {
             internalKeyboardInputErasing = false;
-            state->glyphs = internalRealloc(state->glyphs, --(state->length) * sizeof(int));
+
+            if (state->length > 1)
+                state->glyphs = internalRealloc(state->glyphs, --(state->length) * sizeof(int));
+            else {
+                internalFree(state->glyphs);
+                state->glyphs = NULL;
+                state->length = 0;
+            }
         }
 
         if (internalKeyboardInputting/* && textWidth < width*/) {
