@@ -101,6 +101,26 @@ void rendererDrawPoint(const vec2 DLR_NONNULL position, float pointSize, const v
     glBindVertexArray(0);
 }
 
+static void drawPoints(int count, const float* DLR_NONNULL vertices, float pointSize, const vec4 DLR_NONNULL color) {
+    glBindVertexArray(gRenderer->vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, gRenderer->vbo);
+    glBufferData(GL_ARRAY_BUFFER, (long) (count * sizeof(float)), vertices, GL_DYNAMIC_DRAW);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
+    glEnableVertexAttribArray(0);
+
+    compoundShaderUse(gRenderer->shapeShader);
+    compoundShaderSetMat4(gRenderer->shapeShader, "projection", internalProjection);
+    compoundShaderSetVec4(gRenderer->shapeShader, "color", color);
+
+    glPointSize((float) pointSize);
+    glDrawArrays(GL_POINTS, 0, count);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
 void rendererDrawLine(const vec2 DLR_NONNULL positionStart, const vec2 DLR_NONNULL positionEnd, float lineWidth, const vec4 DLR_NONNULL color) {
     glBindVertexArray(gRenderer->vao);
 
@@ -175,23 +195,28 @@ void rendererDrawRectangle(const vec2 DLR_NONNULL position, const vec2 DLR_NONNU
 }
 
 static void drawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color) {
-    const int32_t diameter = (radius * 2);
+    const int diameter = (radius * 2);
 
-    int32_t x = (radius - 1);
-    int32_t y = 0;
-    int32_t tx = 1;
-    int32_t ty = 1;
-    int32_t error = (tx - diameter);
+    int x = (radius - 1);
+    int y = 0;
+    int tx = 1;
+    int ty = 1;
+    int error = (tx - diameter);
+
+    int count = 0;
+    float* vertices = NULL;
 
     while (x >= y) {
-        rendererDrawPoint((vec2) {positionCenter[0] + (float) x, positionCenter[1] - (float) y}, pointSize, color);
-        rendererDrawPoint((vec2) {positionCenter[0] + (float) x, positionCenter[1] + (float) y}, pointSize, color);
-        rendererDrawPoint((vec2) {positionCenter[0] - (float) x, positionCenter[1] - (float) y}, pointSize, color);
-        rendererDrawPoint((vec2) {positionCenter[0] - (float) x, positionCenter[1] + (float) y}, pointSize, color);
-        rendererDrawPoint((vec2) {positionCenter[0] + (float) y, positionCenter[1] - (float) x}, pointSize, color);
-        rendererDrawPoint((vec2) {positionCenter[0] + (float) y, positionCenter[1] + (float) x}, pointSize, color);
-        rendererDrawPoint((vec2) {positionCenter[0] - (float) y, positionCenter[1] - (float) x}, pointSize, color);
-        rendererDrawPoint((vec2) {positionCenter[0] - (float) y, positionCenter[1] + (float) x}, pointSize, color);
+        count += 16;
+        vertices = internalRealloc(vertices, count * sizeof(float));
+        vertices[count - 16] = positionCenter[0] + (float) x; vertices[count - 15] = positionCenter[1] - (float) y;
+        vertices[count - 14] = positionCenter[0] + (float) x; vertices[count - 13] = positionCenter[1] + (float) y;
+        vertices[count - 12] = positionCenter[0] - (float) x; vertices[count - 11] = positionCenter[1] - (float) y;
+        vertices[count - 10] = positionCenter[0] - (float) x; vertices[count - 9] = positionCenter[1] + (float) y;
+        vertices[count - 8] = positionCenter[0] + (float) y; vertices[count - 7] = positionCenter[1] - (float) x;
+        vertices[count - 6] = positionCenter[0] + (float) y; vertices[count - 5] = positionCenter[1] + (float) x;
+        vertices[count - 4] = positionCenter[0] - (float) y; vertices[count - 3] = positionCenter[1] - (float) x;
+        vertices[count - 2] = positionCenter[0] - (float) y; vertices[count - 1] = positionCenter[1] + (float) x;
 
         if (error <= 0) {
             y++;
@@ -205,17 +230,31 @@ static void drawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float 
             error += (tx - diameter);
         }
     }
+
+    if (vertices != NULL)
+        drawPoints(count, vertices, pointSize, color);
+    internalFree(vertices);
 }
 
 static void drawFilledCircle(const vec2 DLR_NONNULL position, int radius, float pointSize, const vec4 DLR_NONNULL color) {
+    int count = 0;
+    float* vertices = NULL;
+
     for (int w = 0; w < radius * 2; w++) {
         for (int h = 0; h < radius * 2; h++) {
             const int dx = radius - w, dy = radius - h;
 
-            if ((dx * dx + dy * dy) <= (radius * radius))
-                rendererDrawPoint((vec2) {position[0] + (float) dx, position[1] + (float) dy}, pointSize, color);
+            if ((dx * dx + dy * dy) <= (radius * radius)) {
+                count += 2;
+                vertices = internalRealloc(vertices, count * sizeof(float));
+                vertices[count - 2] = position[0] + (float) dx; vertices[count - 1] = position[1] + (float) dy;
+            }
         }
     }
+
+    if (vertices != NULL)
+        drawPoints(count, vertices, pointSize, color);
+    internalFree(vertices);
 }
 
 void rendererDrawCircle(const vec2 DLR_NONNULL positionCenter, int radius, float pointSize, const vec4 DLR_NONNULL color, bool filled) { // TODO: optimize
