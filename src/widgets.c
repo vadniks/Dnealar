@@ -238,13 +238,8 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
     internalDecodeColorChannels(active ? dlrForegroundColor : dlrPassiveColor, &r, &g, &b, &a);
 
     if (state->length > 0) {
+        internalAssert(state->glyphs != NULL && text != NULL);
         drawText(text, fontSize, x, y, r, g, b, a);
-        printf("%d\n", strlen(text));
-//        printf("! %d %p %p\n", state->length, state->glyphs, text);
-//        char c;
-//        for (int i = 0; (c = (text[i])) != 0; i++)
-//            printf("%c", c);
-//        printf("\n");
     }
 
     internalFree(text);
