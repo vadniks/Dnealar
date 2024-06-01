@@ -259,7 +259,10 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
         internalActiveField = state;
     }
 
-    internalDecodeColorChannels(active ? dlrForegroundColor : dlrPassiveColor, &r, &g, &b, &a);
+    internalDecodeColorChannels(
+        withinBounds ? dlrHoverColor : active ? dlrForegroundColor : dlrPassiveColor,
+        &r, &g, &b, &a
+    );
 
     rendererDrawLine(
         (vec2) {(float) x, (float) y + (float) textHeight + 5},
