@@ -12,7 +12,6 @@
 #include <dnealar/widgets.h>
 #include <dnealar/dnealar.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <string.h>
 
 typedef enum {
