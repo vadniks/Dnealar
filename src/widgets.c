@@ -165,21 +165,6 @@ void dlrWidgetsInfiniteProgressBarSize(int fontSize, int* DLR_NONNULL x, int* DL
     internalTextMetrics("==----------", fontSize, x, y);
 }
 
-void aaa(void) {
-    DlrWidgetsFieldState* state = internalMalloc(sizeof *state);
-    state->length = 1;
-    state->glyphs = internalMalloc(1 * sizeof(int));
-    state->glyphs[0] = 'a';
-
-    char* text = dlrWidgetsFieldStateText(state);
-
-    printf("|%s|\n", text);
-
-    internalFree(text);
-
-    dlrWidgetsFieldStateDestroy(state);
-}
-
 DlrWidgetsFieldState* DLR_NONNULL dlrWidgetsFieldStateCreate(void) {
     DlrWidgetsFieldState* state = internalMalloc(sizeof *state);
     state->glyphs = NULL;
@@ -205,7 +190,7 @@ char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL st
             if (glyphBytes[j] == 0) break;
             text = internalRealloc(text, ++textLength);
             internalAssert(text != NULL);
-            text[textLength - 1] = glyphBytes[i];
+            text[textLength - 1] = glyphBytes[j];
         }
     }
 
@@ -216,6 +201,22 @@ char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL st
 }
 
 void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width) {
+    const bool active = internalActiveField == state;
+    if (active) {
+
+        if (internalKeyboardInputErasing && state->length > 0) {
+            internalKeyboardInputErasing = false;
+            state->glyphs = internalRealloc(state->glyphs, --(state->length) * sizeof(int));
+        }
+
+        if (internalKeyboardInputting/* && textWidth < width*/) {
+            internalKeyboardInputting = false;
+            state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
+            internalAssert(state->glyphs != NULL);
+            state->glyphs[state->length - 1] = internalNextGlyph;
+        }
+    }
+
     char* DLR_NULLABLE const text = dlrWidgetsFieldStateText(state);
 
     int textWidth, textHeight;
@@ -226,31 +227,17 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
         textWidth = 0;
     }
 
-    const bool active = internalActiveField == state;
-    if (active) {
-
-        if (internalKeyboardInputErasing && state->length > 0) {
-            internalKeyboardInputErasing = false;
-            state->glyphs = internalRealloc(state->glyphs, --(state->length) * sizeof(int));
-        }
-
-        if (internalKeyboardInputting && textWidth < width) {
-            internalKeyboardInputting = false;
-            state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
-            internalAssert(state->glyphs != NULL);
-            state->glyphs[state->length - 1] = internalNextGlyph;
-        }
-    }
-
     int r, g, b, a;
     internalDecodeColorChannels(active ? dlrForegroundColor : dlrPassiveColor, &r, &g, &b, &a);
 
     if (state->length > 0) {
-//        drawText(text, fontSize, x, y, r, g, b, a);
-        char c;
-        for (int i = 0; (c = (text[i])) != 0; i++)
-            printf("%c", c);
-        printf("\n");
+        drawText(text, fontSize, x, y, r, g, b, a);
+        printf("%d\n", strlen(text));
+//        printf("! %d %p %p\n", state->length, state->glyphs, text);
+//        char c;
+//        for (int i = 0; (c = (text[i])) != 0; i++)
+//            printf("%c", c);
+//        printf("\n");
     }
 
     internalFree(text);
