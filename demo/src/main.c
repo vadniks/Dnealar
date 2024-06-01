@@ -24,6 +24,7 @@ enum FontSize {
 static TTF_Font* gFont = NULL;
 static DlrWidgetsFieldState* gFieldState1 = NULL;
 static DlrWidgetsFieldState* gFieldState2 = NULL;
+static DlrWidgetsFieldState* gFieldState3 = NULL;
 
 static void render(void) {
     dlrWidgetsText("Text", FONT_SIZE_DEFAULT, 0, 0);
@@ -39,6 +40,8 @@ static void render(void) {
 
     dlrWidgetsField(gFieldState1, FONT_SIZE_DEFAULT, false, 0, 100, 150);
     dlrWidgetsField(gFieldState2, FONT_SIZE_DEFAULT, true, 160, 100, 150);
+
+    dlrWidgetsWrappedField(gFieldState3, FONT_SIZE_DEFAULT, 0, 200, 150, 50);
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
@@ -65,6 +68,7 @@ static void loop(SDL_Window* window) {
 
     gFieldState1 = dlrWidgetsFieldStateCreate();
     gFieldState2 = dlrWidgetsFieldStateCreate();
+    gFieldState3 = dlrWidgetsFieldStateCreate();
 
     while (true) {
         SDL_GL_GetDrawableSize(window, &width, &height);
@@ -104,15 +108,18 @@ static void loop(SDL_Window* window) {
     {
         char* text1 = dlrWidgetsFieldStateText(gFieldState1);
         char* text2 = dlrWidgetsFieldStateText(gFieldState2);
+        char* text3 = dlrWidgetsFieldStateText(gFieldState3);
 
-        SDL_Log("|%s| |%s|", text1, text2);
+        SDL_Log("|%s| |%s| |%s|", text1, text2, text3);
 
         SDL_free(text1);
         SDL_free(text2);
+        SDL_free(text3);
     }
 
     dlrWidgetsFieldStateDestroy(gFieldState1);
     dlrWidgetsFieldStateDestroy(gFieldState2);
+    dlrWidgetsFieldStateDestroy(gFieldState3);
 }
 
 static void* DLR_NONNULL textTextureCreate(const char* DLR_NONNULL text, int fontSize, int r, int g, int b, int a) {

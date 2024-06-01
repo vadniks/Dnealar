@@ -29,7 +29,7 @@ struct DlrWidgetsFieldState {
 };
 
 static void drawText(const char* DLR_NONNULL text, int fontSize, int x, int y, int r, int g, int b, int a) {
-    void* rawTexture = internalTextTextureCreate(text, fontSize, r, g, b, a);
+    void* const rawTexture = internalTextTextureCreate(text, fontSize, r, g, b, a);
 
     int textWidth, textHeight;
     internalTextureMetrics(rawTexture, &textWidth, &textHeight);
@@ -55,6 +55,31 @@ void dlrWidgetsText(const char* DLR_NONNULL text, int fontSize, int x, int y) {
 
 void dlrWidgetsTextSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
     internalTextMetrics(text, fontSize, width, height);
+}
+
+static void drawWrappedText(const char* DLR_NONNULL text, int width, int fontSize, int x, int y, int r, int g, int b, int a) {
+    void* const rawTexture = internalWrappedTextTextureCreate(text, width, fontSize, r, g, b, a);
+
+    int textWidth, textHeight;
+    internalTextureMetrics(rawTexture, &textWidth, &textHeight);
+
+    DlrTexture* texture = dlrTextureCreate(textWidth, textHeight, internalTextureData(rawTexture));
+    rendererDrawTexture(
+        texture,
+        (vec2) {(float) x, (float) y},
+        (vec2) {(float) textWidth, (float) textHeight},
+        0.0f,
+        (vec4) {1.0f, 1.0f, 1.0f, 1.0f}
+    );
+    dlrTextureDestroy(texture);
+
+    internalTextureDestroy(rawTexture);
+}
+
+void dlrWidgetsWrappedText(const char* DLR_NONNULL text, int width, int fontSize, int x, int y) {
+    int r, g, b, a;
+    internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
+    drawWrappedText(text, width, fontSize, x, y, r, g, b, a);
 }
 
 bool dlrWidgetsButton(const char* DLR_NONNULL text, int fontSize, int x, int y) {
@@ -278,7 +303,7 @@ void dlrWidgetsFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, 
     *height += 5 + 1;
 }
 
-void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int x, int y, int width) {
+void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int x, int y, int width, int height) {
     int r, g, b, a;
     internalDecodeColorChannels(dlrForegroundColor, &r, &g, &b, &a);
 
@@ -317,14 +342,31 @@ void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSiz
     }
 
     if (text != NULL) {
-        drawText(text, fontSize, x, y, r, g, b, a);
+        drawWrappedText(text, width, fontSize, x, y, r, g, b, a);
     }
 
     if (texture != NULL)
         internalTextureDestroy(texture);
     internalFree(text);
-}
 
-void dlrWidgetsWrappedFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    const bool withinBounds =
+        internalMouseX >= x && internalMouseX <= x + width &&
+        internalMouseY >= y && internalMouseY <= y + height + 1;
 
+    if (withinBounds && internalMouseButtonDown) {
+        internalMouseButtonDown = false;
+        internalActiveField = state;
+    }
+
+    internalDecodeColorChannels(
+        withinBounds ? dlrHoverColor : active ? dlrForegroundColor : dlrPassiveColor,
+        &r, &g, &b, &a
+    );
+
+    rendererDrawLine(
+        (vec2) {(float) x, (float) y + 5.0f + (float) height},
+        (vec2) {(float) x + (float) width, (float) y + 5.0f + (float) height},
+        1,
+        (vec4) {(float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, (float) a / 255.0f}
+    );
 }

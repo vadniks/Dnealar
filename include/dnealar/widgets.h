@@ -18,6 +18,9 @@ typedef struct DlrWidgetsFieldState DlrWidgetsFieldState;
 DLR_EXPORT void dlrWidgetsText(const char* DLR_NONNULL text, int fontSize, int x, int y);
 DLR_EXPORT void dlrWidgetsTextSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
+DLR_EXPORT void dlrWidgetsWrappedText(const char* DLR_NONNULL text, int width, int fontSize, int x, int y);
+// WrappedText size can be retrieved via the supplied DlrTextureMetrics function
+
 DLR_EXPORT bool dlrWidgetsButton(const char* DLR_NONNULL text, int fontSize, int x, int y);
 DLR_EXPORT void dlrWidgetsButtonSize(const char* DLR_NONNULL text, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
@@ -34,5 +37,4 @@ DLR_EXPORT char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR
 DLR_EXPORT void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width);
 DLR_EXPORT void dlrWidgetsFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
 
-DLR_EXPORT void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int x, int y, int width);
-DLR_EXPORT void dlrWidgetsWrappedFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height);
+DLR_EXPORT void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int x, int y, int width, int height);
