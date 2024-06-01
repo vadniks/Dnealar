@@ -252,7 +252,7 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
 
     const bool withinBounds =
         internalMouseX >= x && internalMouseX <= x + width &&
-        internalMouseY >= y && internalMouseY <= y + height;
+        internalMouseY >= y && internalMouseY <= y + height + 1;
 
     if (withinBounds && internalMouseButtonDown) {
         internalMouseButtonDown = false;
@@ -272,6 +272,9 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
     );
 }
 
-void dlrWidgetsFieldSize(int fontSize, int width) {
-
+void dlrWidgetsFieldSize(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, int* DLR_NONNULL width, int* DLR_NONNULL height) {
+    char* text = dlrWidgetsFieldStateText(state);
+    internalTextMetrics(text, fontSize, width, height);
+    internalFree(text);
+    *height += 5 + 1;
 }
