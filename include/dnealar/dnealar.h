@@ -43,7 +43,6 @@ typedef void (* DLR_NONNULL DlrTextMetrics)(const char* DLR_NONNULL text, int fo
 DLR_EXPORT extern int dlrForegroundColor;
 DLR_EXPORT extern int dlrBackgroundColor;
 DLR_EXPORT extern int dlrHoverColor;
-DLR_EXPORT extern int dlrActiveColor;
 DLR_EXPORT extern int dlrPassiveColor;
 
 DLR_EXPORT void dlrInit(

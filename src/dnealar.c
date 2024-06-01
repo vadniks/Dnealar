@@ -17,7 +17,6 @@
 int dlrForegroundColor = (int) 0xffffffff;
 int dlrBackgroundColor = 0x25252525;
 int dlrHoverColor = 0x70707070;
-int dlrActiveColor = 0x00ffff7f;
 int dlrPassiveColor = 0x60606060;
 
 void dlrInit(
