@@ -344,7 +344,6 @@ void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSiz
             xState->glyphs[state->length] = internalNextGlyph;
 
             char* DLR_NULLABLE const xText = dlrWidgetsFieldStateText(xState);
-            printf("%s\n", xText);
             void* DLR_NULLABLE const probe = xText == NULL || state->length == 0 ? NULL : internalWrappedTextTextureCreate(xText, width, fontSize, r, g, b, a);
 
             int probeWidth = 0, probeHeight = 0;
