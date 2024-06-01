@@ -7,8 +7,8 @@ Example usage is shown in the demo executable.
 
 ## Screenshots
 
-![](a.png)
-![](b.png)
+![](screenshots/a.png)
+![](screenshots/b.png)
 
 ## Build & run
 
