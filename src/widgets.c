@@ -216,7 +216,13 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
             }
         }
 
-        if (internalKeyboardInputting/* && textWidth < width*/) {
+        char* DLR_NULLABLE const text = dlrWidgetsFieldStateText(state);
+        int textWidth = 0, textHeight;
+        if (text != NULL)
+            internalTextMetrics(text, fontSize, &textWidth, &textHeight);
+        internalFree(text);
+
+        if (internalKeyboardInputting && textWidth < width) {
             internalKeyboardInputting = false;
             state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
             internalAssert(state->glyphs != NULL);
