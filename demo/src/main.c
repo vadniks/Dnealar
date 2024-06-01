@@ -27,28 +27,28 @@ static DlrWidgetsFieldState* gFieldState2 = NULL;
 static DlrWidgetsFieldState* gFieldState3 = NULL;
 
 static void render(void) {
-//    dlrWidgetsText("Text", FONT_SIZE_DEFAULT, 0, 0);
-//
-//    if (dlrWidgetsButton("Button", FONT_SIZE_DEFAULT, 50, 0))
-//        SDL_Log("button clicked");
-//
-//    static bool clicked = false;
-//    if (dlrWidgetsCheckbox("Checkbox", FONT_SIZE_DEFAULT, clicked, false, 150, 0))
-//        clicked = !clicked;
-//
-//    dlrWidgetsInfiniteProgressBar((int) SDL_GetTicks(), FONT_SIZE_DEFAULT, 300, 0);
-//
-//    dlrWidgetsField(gFieldState1, FONT_SIZE_DEFAULT, false, 0, 100, 150);
-//    dlrWidgetsField(gFieldState2, FONT_SIZE_DEFAULT, true, 160, 100, 150);
-//
-//    dlrWidgetsWrappedField(gFieldState3, FONT_SIZE_DEFAULT, 0, 200, 150, 70);
+    dlrWidgetsText("Text", FONT_SIZE_DEFAULT, 0, 0);
+
+    if (dlrWidgetsButton("Button", FONT_SIZE_DEFAULT, 50, 0))
+        SDL_Log("button clicked");
+
+    static bool clicked = false;
+    if (dlrWidgetsCheckbox("Checkbox", FONT_SIZE_DEFAULT, clicked, false, 150, 0))
+        clicked = !clicked;
+
+    dlrWidgetsInfiniteProgressBar((int) SDL_GetTicks(), FONT_SIZE_DEFAULT, 300, 0);
+
+    dlrWidgetsField(gFieldState1, FONT_SIZE_DEFAULT, false, 0, 100, 150);
+    dlrWidgetsField(gFieldState2, FONT_SIZE_DEFAULT, true, 160, 100, 150);
+
+    dlrWidgetsWrappedField(gFieldState3, FONT_SIZE_DEFAULT, 0, 200, 150, 70);
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);
 //    dlrPrimitivesRectangle(110, 110, 100, 50, 1, 255, 255, 255, 255, true);
 //    dlrPrimitivesRectangle(220, 170, 100, 50, 5, 255, 255, 255, 255, false);
-    dlrPrimitivesCircle(300, 300, 50, 5, 255, 255, 255, 255, false);
-    dlrPrimitivesCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
+//    dlrPrimitivesCircle(300, 300, 50, 5, 255, 255, 255, 255, false);
+//    dlrPrimitivesCircle(600, 300, 50, 1, 255, 255, 255, 255, true);
 //
 //    SDL_Surface* surface = TTF_RenderUTF8_Blended(gFont, "Hello World!", (SDL_Color) {255, 255, 255, 255});
 //    SDL_Surface* xSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
