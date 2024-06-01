@@ -13,6 +13,7 @@
 #include <dnealar/dnealar.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdio.h>
 
 typedef enum {
     INFINITE_PROGRESS_BAR_STATE_A = 150,
@@ -333,7 +334,7 @@ void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSiz
             }
         }
 
-        if (internalKeyboardInputting && textWidth < width) {
+        if (internalKeyboardInputting && textHeight <= height) {
             internalKeyboardInputting = false;
             state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
             internalAssert(state->glyphs != NULL);
