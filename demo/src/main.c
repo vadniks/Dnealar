@@ -41,7 +41,7 @@ static void render(void) {
     dlrWidgetsField(gFieldState1, FONT_SIZE_DEFAULT, false, 0, 100, 150);
     dlrWidgetsField(gFieldState2, FONT_SIZE_DEFAULT, true, 160, 100, 150);
 
-    dlrWidgetsWrappedField(gFieldState3, FONT_SIZE_DEFAULT, 0, 200, 150, 50);
+    dlrWidgetsWrappedField(gFieldState3, FONT_SIZE_DEFAULT, 0, 200, 150, 70);
 
 //    dlrPrimitivesPoint(100, 100, 5, 255, 255, 255, 255);
 //    dlrPrimitivesLine(10, 10, 90, 90, 5, 255, 255, 255, 255);

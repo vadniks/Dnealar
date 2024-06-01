@@ -334,7 +334,7 @@ void dlrWidgetsWrappedField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSiz
             }
         }
 
-        if (internalKeyboardInputting && textHeight <= height) {
+        if (internalKeyboardInputting && textHeight < height) {
             internalKeyboardInputting = false;
             state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
             internalAssert(state->glyphs != NULL);
