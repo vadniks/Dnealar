@@ -201,6 +201,16 @@ char* DLR_NULLABLE dlrWidgetsFieldStateText(DlrWidgetsFieldState* DLR_NONNULL st
 }
 
 void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool password, int x, int y, int width) {
+    char* DLR_NULLABLE const text = dlrWidgetsFieldStateText(state);
+
+    int textWidth, textHeight;
+    if (text != NULL)
+        internalTextMetrics(text, fontSize, &textWidth, &textHeight);
+    else {
+        internalTextMetrics("W", fontSize, &textWidth, &textHeight);
+        textWidth = 0;
+    }
+
     const bool active = internalActiveField == state;
     if (active) {
 
@@ -216,12 +226,6 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
             }
         }
 
-        char* DLR_NULLABLE const text = dlrWidgetsFieldStateText(state);
-        int textWidth = 0, textHeight;
-        if (text != NULL)
-            internalTextMetrics(text, fontSize, &textWidth, &textHeight);
-        internalFree(text);
-
         if (internalKeyboardInputting && textWidth < width) {
             internalKeyboardInputting = false;
             state->glyphs = internalRealloc(state->glyphs, ++(state->length) * sizeof(int));
@@ -230,23 +234,11 @@ void dlrWidgetsField(DlrWidgetsFieldState* DLR_NONNULL state, int fontSize, bool
         }
     }
 
-    char* DLR_NULLABLE const text = dlrWidgetsFieldStateText(state);
-
-    int textWidth, textHeight;
-    if (text != NULL)
-        internalTextMetrics(text, fontSize, &textWidth, &textHeight);
-    else {
-        internalTextMetrics("W", fontSize, &textWidth, &textHeight);
-        textWidth = 0;
-    }
-
     int r, g, b, a;
     internalDecodeColorChannels(active ? dlrForegroundColor : dlrPassiveColor, &r, &g, &b, &a);
 
-    if (state->length > 0) {
-        internalAssert(state->glyphs != NULL && text != NULL);
+    if (text != NULL)
         drawText(text, fontSize, x, y, r, g, b, a);
-    }
 
     internalFree(text);
 
