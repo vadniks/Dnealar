@@ -10,6 +10,7 @@ Example usage is shown in the demo executable.
 
 ![](screenshots/a.png)
 ![](screenshots/b.png)
+![](screenshots/c.png)
 
 ## Build & run
 
